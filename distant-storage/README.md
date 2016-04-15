@@ -115,6 +115,21 @@ user1@internal:~$ fusermount -u /boxes/box
 user1@internal:~$ fusermount -u /boxes/.box_enc
 ```
 
+## Example of usage: samba
+
+Add Samba user
+```bash
+root@internal:~$ adduser --no-create-home --disabled-password --disabled-login sambausername
+root@internal:~$ smbpasswd -a sambausername
+```
+
+Backup and configure Samba
+```bash
+root@internal:~$ cp /etc/samba/smb.conf /etc/samba/smb.conf.old
+root@internal:~$ service smbd restart
+```
+[Example](/)
+
 ## Sources
 - http://lea-linux.org/documentations/SFTP_%26_RSSH_:_Cr%C3%A9er_un_serveur_de_fichiers_s%C3%A9curis%C3%A9
 - http://www.herethere.net/~samson/rssh_chroot.html
