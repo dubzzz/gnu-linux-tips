@@ -112,6 +112,11 @@ root@internal:~$ chown user1:user1 /boxes/*
 root@internal:~$ chmod 770 /boxes/*
 ```
 
+Required packages
+```bash
+root@internal:~$ apt-get install sshfs encfs
+```
+
 Mount distant drive
 ```bash
 user1@internal:~$ sshfs scpuser@distant:box /boxes/.box_enc -o uid=$(id -u) -o gid=$(id -g)
