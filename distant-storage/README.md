@@ -5,6 +5,8 @@ The aim of this section is to describe a way to deploy an encrypted distant stor
 - internal server: decrypts/encrypts data stored on distant on the fly using user scpuser
 - other machine: accesses plain data without the need to encrypt anything
 
+![Final architecture](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/distant-storage/distant-storage.png "Final architecture")
+
 ## Only scp and sftp on distant machine
 
 Install rssh
