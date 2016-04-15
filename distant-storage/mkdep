@@ -1,0 +1,68 @@
+#!/bin/bash
+# TAKEN FROM http://jeannedarc001.free.fr/mkdep
+#This is the file copying dependency and the original binary into the jail.
+#It copies all files modified by using diff utility
+
+if [ "$1" == "" ] ; then
+        echo "Missing paramater: path of binary"
+	echo "mkdep -h pour plus d'informations"
+        exit
+fi
+if [ "$1" == "-h" ] ; then
+	echo "mkdep file chroot [-h]"
+	echo "Mkdep copie les dépendances d'un binaire dans un répertoire donné"
+	echo "file       Fichier à partir duquel on veut copier les dépendances"
+	echo "chroot     Répertoire de destination dans lequel les dépendances seront copiées"
+	echo "-h         Affiche cet écran d'aide"
+	echo "Source du script : http://www.genco.gen.tc/gentoo_chroot_apache2.html"
+	exit
+fi
+
+CHROOT=$2
+
+#First copy the binary itself
+echo "$1 --> $CHROOT$1"
+cp --parents $1 $CHROOT/
+
+for i in $(ldd $1 |awk -F"=>" {'print $2'}| awk -F" " {'print $1'} | grep -v '^(')
+do
+
+   if [  -e $CHROOT$i ] ; then
+
+   #And if it is a modified file copy it.
+    diff $i $CHROOT$i
+     if [ $? -ne 0 ] ; then
+     cp --parents $i $CHROOT/
+     fi
+   fi
+
+    #If the lib doesnt exist copy it
+    if [ ! -e $CHROOT$i ] ; then
+       cp --parents $i $CHROOT/
+    fi
+
+
+   done
+
+   #Catch other libraries missed by above loop
+   for i in $(ldd $1 |awk -F" " {'print $1'}|grep "^/")
+   do
+
+   if [  -e $CHROOT$i ] ; then
+
+   #cp --parents $i $CHROOT/
+   diff $i $CHROOT$i
+   if [ $? -ne 0 ] ; then
+     cp --parents $i $CHROOT/
+
+   fi
+
+   fi
+
+   #If the lib doesnt exist copy it
+    if [ ! -e $CHROOT$i ] ; then
+       cp --parents $i $CHROOT/
+    fi
+
+
+   done
