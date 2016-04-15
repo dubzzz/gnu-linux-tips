@@ -7,6 +7,15 @@ The aim of this section is to describe a way to deploy an encrypted distant stor
 
 ![Final architecture](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/distant-storage/distant-storage.png "Final architecture")
 
+## Table of Contents
+
+- [Only scp and sftp on distant machine](#only-scp-and-sftp-on-distant-machine)
+- [No root access on distant machine](#no-root-access-on-distant-machine)
+- [Mount the drive manually](#mount-the-drive-manually)
+- [Example of usage: samba](#example-of-usage-samba)
+- [Mount the drive by script](#mount-the-drive-by-script)
+- [Sources](#sources)
+
 ## Only scp and sftp on distant machine
 
 Install rssh
