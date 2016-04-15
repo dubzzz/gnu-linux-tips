@@ -130,6 +130,18 @@ root@internal:~$ service smbd restart
 ```
 [Example](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/distant-storage/smb.conf)
 
+## Mount the drive by script
+
+Create a public key for root user of internal and send it to distant machine in order to be able to log as scpuser (add it to authorized_keys of scpuser as done above).
+
+Useful command for the scripts: find uid/gid of the user sambausername
+```bash
+cat /etc/passwd | grep sambausername #find uid/gid of the user sambausername
+```
+
+[Script 1: start shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/distant-storage/start-shared.sh)
+[Script 2: stop shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/distant-storage/stop-shared.sh)
+
 ## Sources
 - http://lea-linux.org/documentations/SFTP_%26_RSSH_:_Cr%C3%A9er_un_serveur_de_fichiers_s%C3%A9curis%C3%A9
 - http://www.herethere.net/~samson/rssh_chroot.html
