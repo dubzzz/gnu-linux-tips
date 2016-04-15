@@ -55,7 +55,7 @@ root@distant:~$ service ssh restart
 Create jails (a kind of second root)
 ```bash
 root@distant:~$ cd /home/jails
-root@distant:~$ wget http://jeannedarc001.free.fr/mkdep
+root@distant:~$ wget https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/distant-storage/mkdep #http://jeannedarc001.free.fr/mkdep
 root@distant:~$ chmod +x mkdep
 root@distant:~$ # Binaries and libs
 root@distant:~$ ./mkdep /usr/bin/rssh .
