@@ -128,7 +128,7 @@ Backup and configure Samba
 root@internal:~$ cp /etc/samba/smb.conf /etc/samba/smb.conf.old
 root@internal:~$ service smbd restart
 ```
-[Example](/)
+[Example](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/distant-storage/smb.conf)
 
 ## Sources
 - http://lea-linux.org/documentations/SFTP_%26_RSSH_:_Cr%C3%A9er_un_serveur_de_fichiers_s%C3%A9curis%C3%A9
