@@ -38,7 +38,7 @@ Creating the user
 ```bash
 root@distant:~$ service ssh restart
 root@distant:~$ mkdir -p /home/jails/home
-root@distant:~$ adduser --disabled-password --home /home/jails/home/scpuser --shell $(which rssh) scpuser
+root@distant:~$ adduser --disabled-password --home /home/jails/home/scpuser --shell "$(which rssh)" scpuser
 ```
 
 ## Sources
