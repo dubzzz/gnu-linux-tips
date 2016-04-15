@@ -140,6 +140,7 @@ cat /etc/passwd | grep sambausername #find uid/gid of the user sambausername
 ```
 
 [Script 1: start shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/distant-storage/start-shared.sh)
+
 [Script 2: stop shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/distant-storage/stop-shared.sh)
 
 ## Sources
