@@ -57,24 +57,62 @@ root@distant:~$ service ssh restart
 Create jails (a kind of second root)
 ```bash
 root@distant:~$ cd /home/jails
-root@distant:~$ wget https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/distant-storage/mkdep #http://jeannedarc001.free.fr/mkdep
-root@distant:~$ chmod +x mkdep
-root@distant:~$ # Binaries and libs
-root@distant:~$ ./mkdep /usr/bin/rssh .
-root@distant:~$ ./mkdep /usr/bin/sftp .
-root@distant:~$ ./mkdep /usr/lib/rssh/rssh_chroot_helper .
-root@distant:~$ ./mkdep /usr/lib/sftp-server .
-root@distant:~$ ./mkdep /usr/bin/scp .
-root@distant:~$ # Config files
-root@distant:~$ mkdir etc
-root@distant:~$ cp /etc/rssh.conf etc/
-root@distant:~$ grep '^scpuser:' /home/jails/etc/passwd || grep '^scpuser:' /etc/passwd >> /home/jails/etc/passwd
-root@distant:~$ cp -p /etc/group /home/jails/etc/group
-root@distant:~$ # Device files
-root@distant:~$ mkdir dev
-root@distant:~$ mknod dev/zero c 1 5
-root@distant:~$ mknod dev/null c 1 3
-root@distant:~$ chmod 666 dev/*
+root@distant:/home/jails$ wget https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/distant-storage/mkdep #http://jeannedarc001.free.fr/mkdep
+root@distant:/home/jails$ chmod +x mkdep
+root@distant:/home/jails$ # Binaries and libs
+root@distant:/home/jails$ ./mkdep /usr/bin/rssh .
+root@distant:/home/jails$ ./mkdep /usr/bin/sftp .
+root@distant:/home/jails$ ./mkdep /usr/lib/rssh/rssh_chroot_helper .
+root@distant:/home/jails$ ./mkdep /usr/lib/sftp-server .
+root@distant:/home/jails$ ./mkdep /usr/bin/scp .
+root@distant:/home/jails$ # Config files
+root@distant:/home/jails$ mkdir etc
+root@distant:/home/jails$ cp /etc/rssh.conf etc/
+root@distant:/home/jails$ grep '^scpuser:' /home/jails/etc/passwd || grep '^scpuser:' /etc/passwd >> /home/jails/etc/passwd
+root@distant:/home/jails$ cp -p /etc/group /home/jails/etc/group
+root@distant:/home/jails$ # Device files
+root@distant:/home/jails$ mkdir dev
+root@distant:/home/jails$ mknod dev/zero c 1 5
+root@distant:/home/jails$ mknod dev/null c 1 3
+root@distant:/home/jails$ chmod 666 dev/*
+```
+
+## Mount the drive manually
+
+Generate the public key on the _internal server_ and add it to user scpuser of the _distant server_.
+If you are generating the key for a non-root user, you should configure it with a password for higher safety.
+```bash
+user1@internal:~$ ssh-keygen -b 4096 -t rsa
+user1@internal:~$ scp ~/.ssh/id_rsa.pub user1@distant:id_rsa_internal.pub
+```
+
+Add the public key of user1@internal to the authorized keys of scpuser@distant.
+```bash
+root@distant:~$ cat ~user1/id_rsa_internal.pub >> ~scpuser/.ssh/authorized_keys
+root@distant:~$ rm ~user1/id_rsa_internal.pub
+root@distant:~$ mkdir ~scpuser/box #directory hosting the encrypted data
+```
+
+Configure the file structure to host the distant drive
+```bash
+root@internal:~$ mkdir /boxes
+root@internal:~$ chmod 755 /boxes
+root@internal:~$ mkdir /boxes/.box_enc
+root@internal:~$ mkdir /boxes/box
+root@internal:~$ chown user1:user1 /boxes/*
+root@internal:~$ chmod 770 /boxes/*
+```
+
+Mount distant drive
+```bash
+user1@internal:~$ sshfs scpuser@distant:box /boxes/.box_enc -o uid=$(id -u) -o gid=$(id -g)
+user1@internal:~$ encfs /boxes/.box_enc /boxes/box
+```
+
+Unmount distant drive
+```bash
+user1@internal:~$ fusermount -u /boxes/box
+user1@internal:~$ fusermount -u /boxes/.box_enc
 ```
 
 ## Sources
