@@ -140,8 +140,16 @@ cat /etc/passwd | grep sambausername #find uid/gid of the user sambausername
 ```
 
 [Script 1: start shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/distant-storage/start-shared.sh)
+```bash
+# Mount distant drive and start samba
+root@internal:~$ ./start-shared.sh #will ask you a password
+```
 
 [Script 2: stop shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/distant-storage/stop-shared.sh)
+```bash
+# Unmount distant drive and stop samba
+root@internal:~$ ./stop-shared.sh
+```
 
 ## Sources
 - http://lea-linux.org/documentations/SFTP_%26_RSSH_:_Cr%C3%A9er_un_serveur_de_fichiers_s%C3%A9curis%C3%A9
