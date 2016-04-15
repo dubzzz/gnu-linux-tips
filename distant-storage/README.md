@@ -154,3 +154,5 @@ root@internal:~$ ./stop-shared.sh
 ## Sources
 - http://lea-linux.org/documentations/SFTP_%26_RSSH_:_Cr%C3%A9er_un_serveur_de_fichiers_s%C3%A9curis%C3%A9
 - http://www.herethere.net/~samson/rssh_chroot.html
+- https://doc.ubuntu-fr.org/sshfs [with fstab no encfs]
+- http://www.jinnko.org/2010/11/using-autofs-to-mount-encfs-over-cifs.html [with fstab]
