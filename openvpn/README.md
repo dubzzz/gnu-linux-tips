@@ -50,6 +50,11 @@ root@server:~$ echo "1" > /proc/sys/net/ipv4/ip_forward
 root@server:~$ service openvpn restart
 ```
 
+NOTE: you can change the password of a certificate by running
+```bash
+root@server:~$ openssl rsa -des3 -in client1.key -out client1.bis.key
+```
+
 ## Who needs what?
 
 Both server and client:
