@@ -49,3 +49,17 @@ root@server:~$ iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERA
 root@server:~$ echo "1" > /proc/sys/net/ipv4/ip_forward
 root@server:~$ service openvpn restart
 ```
+
+## Who needs what?
+
+Both server and client:
+- ca.crt
+
+Server only:
+- server.crt
+- server.key
+- dh1024.pem
+
+Client only:
+- client.crt
+- client.key
