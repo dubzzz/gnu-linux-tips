@@ -1,5 +1,13 @@
 # OpenVPN
 
+## Table of contents
+
+- [OpenVPN server configuration](#openvpn-server-configuration)
+- [Who needs what?](#who-needs-what)
+- [OpenVPN for Android](#openvpn-for-android)
+- [OpenVPN for GNU/Linux client](#openvpn-for-gnulinux-client)
+- [OpenVPN for Windows](#openvpn-for-windows)
+
 ## OpenVPN server configuration
 
 Root certificate
@@ -75,7 +83,7 @@ Client only:
 - client.crt
 - client.key
 
-## OpenVPN and Android
+## OpenVPN for Android
 
 [Available on Play Store](https://play.google.com/store/apps/details?id=net.openvpn.openvpn)
 
