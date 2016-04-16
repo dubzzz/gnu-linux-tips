@@ -55,7 +55,7 @@ NOTE: you can change the password of a certificate by running
 root@server:~$ openssl rsa -des3 -in client1.key -out client1.bis.key
 ```
 
-NOTE: OpenVPN has a way to debug congiguration files for both server and client
+NOTE: OpenVPN has a way to debug configuration files for both server and client
 ```bash
 root@server:~$ cd /etc/openvpn && openvpn server.conf #server
 root@client:~$ cd /etc/openvpn && openvpn client.conf #client
