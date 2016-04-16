@@ -4,7 +4,7 @@ Motherboard RAID sucks, software RAID is far better for personal usage and small
 This section will only discuss mdadm solution which is a software RAID tools.
 It supports multiple kind of RAID, ranging from RAID-0 to RAID-6 or more exotic ones.
 
-## Warm-up: Manage partitions
+## Configure partitions
 
 Manage partitions. You may want to refer to [MBR](https://github.com/dubzzz/gnu-linux-tips/tree/master/mbr) before applying any changes to partitions.
 ```bash
