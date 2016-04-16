@@ -45,6 +45,7 @@ push "dhcp-option DNS 208.67.220.220"
 
 Enable ip forward: these commands have to be run at each restart
 ```bash
-iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
-echo "1" > /proc/sys/net/ipv4/ip_forward
+root@server:~$ iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
+root@server:~$ echo "1" > /proc/sys/net/ipv4/ip_forward
+root@server:~$ service openvpn restart
 ```
