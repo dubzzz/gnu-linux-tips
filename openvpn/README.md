@@ -14,34 +14,34 @@ Root certificate
 ```bash
 root@server:~$ apt-get install openvpn
 root@server:~$ cp /usr/share/doc/openvpn/examples/easy-rsa ~/openvpn/ -R
-root@server:~$ cd ~/openvpn/2.0/
-root@server:~$ vim vars
-root@server:~$ . ./vars
-root@server:~$ ./clean-all
-root@server:~$ ./build-ca
+root@server:~/openvpn/2.0/$ cd ~/openvpn/2.0/
+root@server:~/openvpn/2.0/$ vim vars
+root@server:~/openvpn/2.0/$ . ./vars
+root@server:~/openvpn/2.0/$ ./clean-all
+root@server:~/openvpn/2.0/$ ./build-ca
 ```
 
 Certicate and server' key
 ```bash
-root@server:~$ ./build-key-server server
+root@server:~/openvpn/2.0/$ ./build-key-server server
 ```
 
 Certicate and clients' keys
 ```bash
-root@server:~$ ./build-key client1
+root@server:~/openvpn/2.0/$ ./build-key client1
 ```
 
 Diffie-Hellman
 ```bash
-root@server:~$ ./build-dh
+root@server:~/openvpn/2.0/$ ./build-dh
 ```
 
 Server configuration
 ```bash
-root@server:~$ cp keys/dh*.pem keys/ca.crt keys/server.crt keys/server.key /etc/openvpn/
-root@server:~$ cd /usr/share/doc/openvpn/examples/sample-config-files
-root@server:~$ gunzip server.conf.gz
-root@server:~$ cp /usr/share/doc/openvpn/examples/sample-config-files/server.conf /etc/openvpn/
+root@server:~/openvpn/2.0/$ cp keys/dh*.pem keys/ca.crt keys/server.crt keys/server.key /etc/openvpn/
+root@server:~/openvpn/2.0/$ cd /usr/share/doc/openvpn/examples/sample-config-files
+root@server:/usr/share/doc/openvpn/examples/sample-config-files$ gunzip server.conf.gz
+root@server:/usr/share/doc/openvpn/examples/sample-config-files$ cp /usr/share/doc/openvpn/examples/sample-config-files/server.conf /etc/openvpn/
 ```
 
 Edit /etc/openvpn/server.conf, you can give it following settings for instance:
@@ -60,7 +60,7 @@ root@server:~$ service openvpn restart
 
 NOTE: you can change the password of a certificate by running
 ```bash
-root@server:~$ openssl rsa -des3 -in client1.key -out client1.bis.key
+root@server:~/openvpn/2.0/$ openssl rsa -des3 -in client1.key -out client1.bis.key
 ```
 
 NOTE: OpenVPN has a way to debug configuration files for both server and client
