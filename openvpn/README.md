@@ -12,34 +12,45 @@
 
 Root certificate
 ```bash
+## Debian Wheezy (version 7.x)
+
 root@server:~$ apt-get install openvpn
 root@server:~$ cp /usr/share/doc/openvpn/examples/easy-rsa ~/openvpn/ -R
-root@server:~/openvpn/2.0/$ cd ~/openvpn/2.0/
-root@server:~/openvpn/2.0/$ vim vars
-root@server:~/openvpn/2.0/$ . ./vars
-root@server:~/openvpn/2.0/$ ./clean-all
-root@server:~/openvpn/2.0/$ ./build-ca
+root@server:~$ cd ~/openvpn/2.0/
+
+## Raspbian Jessie (version 8.x)
+
+root@server:~$ apt-get install openvpn easy-rsa
+root@server:~$ make-cadir openvpn
+root@server:~$ cd ~/openvpn/
+```
+
+```bash
+root@server:~/<openvpn>/$ vim vars
+root@server:~/<openvpn>/$ . ./vars
+root@server:~/<openvpn>/$ ./clean-all
+root@server:~/<openvpn>/$ ./build-ca
 ```
 
 Certicate and server' key
 ```bash
-root@server:~/openvpn/2.0/$ ./build-key-server server
+root@server:~/<openvpn>/$ ./build-key-server server
 ```
 
 Certicate and clients' keys
 ```bash
-root@server:~/openvpn/2.0/$ ./build-key client1
+root@server:~/<openvpn>/$ ./build-key client1
 ```
 
 Diffie-Hellman
 ```bash
-root@server:~/openvpn/2.0/$ ./build-dh
+root@server:~/<openvpn>/$ ./build-dh
 ```
 
 Server configuration
 ```bash
-root@server:~/openvpn/2.0/$ cp keys/dh*.pem keys/ca.crt keys/server.crt keys/server.key /etc/openvpn/
-root@server:~/openvpn/2.0/$ cd /usr/share/doc/openvpn/examples/sample-config-files
+root@server:~/<openvpn>/$ cp keys/dh*.pem keys/ca.crt keys/server.crt keys/server.key /etc/openvpn/
+root@server:~/<openvpn>/$ cd /usr/share/doc/openvpn/examples/sample-config-files
 root@server:/usr/share/doc/openvpn/examples/sample-config-files$ gunzip server.conf.gz
 root@server:/usr/share/doc/openvpn/examples/sample-config-files$ cp /usr/share/doc/openvpn/examples/sample-config-files/server.conf /etc/openvpn/
 ```
@@ -60,7 +71,7 @@ root@server:~$ service openvpn restart
 
 NOTE: you can change the password of a certificate by running
 ```bash
-root@server:~/openvpn/2.0/$ openssl rsa -des3 -in client1.key -out client1.bis.key
+root@server:~/<openvpn>/$ openssl rsa -des3 -in client1.key -out client1.bis.key
 ```
 
 NOTE: OpenVPN has a way to debug configuration files for both server and client
