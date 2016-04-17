@@ -1,6 +1,6 @@
-# Distant Storage
+# Remote Storage
 
-The aim of this section is to describe a way to deploy an encrypted distant storage. The resulting setup is:
+The aim of this section is to describe a way to deploy an encrypted remote storage. The resulting setup is:
 - distant server: owns encrypted data it cannot read
 - internal server: decrypts/encrypts data stored on distant on the fly using user scpuser
 - other machine: accesses plain data without the need to encrypt anything

@@ -5,6 +5,6 @@ General knowledge
 
 Services
 - Automatic backups with rsync
-- [Distant storage](https://github.com/dubzzz/gnu-linux-tips/blob/master/distant-storage/README.md)
 - [OpenVPN](https://github.com/dubzzz/gnu-linux-tips/blob/master/openvpn/README.md)
 - [RAID](https://github.com/dubzzz/gnu-linux-tips/blob/master/raid/README.md)
+- [Remote storage](https://github.com/dubzzz/gnu-linux-tips/blob/master/remote-storage/README.md)
