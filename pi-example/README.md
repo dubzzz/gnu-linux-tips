@@ -2,6 +2,9 @@
 
 ## Remote storage as local network drive
 
+In that section, Raspberry PI can be seen as an always running machine without lots of storage.
+This configuration can apply to all devices not having lots of storage but running all day long so that they can be used by all running machines of the local network and eventually machines outside of the network.
+
 ### Local drive
 
 The idea is to build a safe remote drive accessible easily as a network drive from Windows, GNU/Linux or Mac.
