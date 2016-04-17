@@ -28,5 +28,9 @@ But this configuration has some limitations:
 For security reasons, the unencrypted version must not be hold on the remote machine.
 Otherwise it would have meant nothing to encrypt it, as it will not protect againt compromised machine.
 
-For that reason, I prefer considering opening the local network to some clients through VPNs whose configuration is described at:
+Available choices:
+- OpenVPN server on the PI
+- OpenVPN server on remote and sharing Pi's (and all local) network drives to remote
+
+OpenVPN installation is described at:
 https://github.com/dubzzz/gnu-linux-tips/blob/master/openvpn/README.md
