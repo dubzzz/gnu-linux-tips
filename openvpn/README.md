@@ -13,18 +13,17 @@
 Root certificate
 ```bash
 ## Debian Wheezy (version 7.x)
-
 root@server:~$ apt-get install openvpn
 root@server:~$ cp /usr/share/doc/openvpn/examples/easy-rsa ~/openvpn/ -R
 root@server:~$ cd ~/openvpn/2.0/
 
 ## Raspbian Jessie (version 8.x)
-
 root@server:~$ apt-get install openvpn easy-rsa
 root@server:~$ make-cadir openvpn
 root@server:~$ cd ~/openvpn/
 ```
 
+Then,
 ```bash
 root@server:~/<openvpn>/$ vim vars
 root@server:~/<openvpn>/$ . ./vars
