@@ -32,5 +32,25 @@ Available choices:
 - OpenVPN server on the PI
 - OpenVPN server on remote and sharing Pi's (and all local) network drives to remote
 
+#### OpenVPN Setup
+
 OpenVPN installation is described at:
 https://github.com/dubzzz/gnu-linux-tips/blob/master/openvpn/README.md
+
+#### FTP Setup
+
+FTP installation is described at:
+https://github.com/dubzzz/gnu-linux-tips/blob/master/ftp/README.md#basic-ftp
+
+I personally chose to use the same user for both samba and ftp. I also advise you to add the following options to Pure-FTPd for a safer configuration:
+```bash
+root@server:~$ echo "yes" > /etc/pure-ftpd/conf/ChrootEveryone
+root@server:~$ echo "yes" > /etc/pure-ftpd/conf/NoAnonymous
+root@server:~$ echo "113 002" > /etc/pure-ftpd/conf/Umask #file=664/folder=775 for consitency with samba
+```
+
+#### Restrict FTP to OpenVPN users
+
+There is no need to expose FTP to users outside of the VPN. Users in local network will have a network drive shared using Samba, users outside of the network should not be granted any accesses except when connecting in the provided VPN.
+
+Moreover, FTP is too usesafe to be exposed to external clients.
