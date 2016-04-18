@@ -11,7 +11,7 @@ These two protocols will not be discussed in this section.
 root@server:~$ apt-get install pure-ftpd
 ```
 
-### Create the virtual user and add it to available ones
+### Create a virtual user and add it to available ones
 
 ```bash
 root@server:~$ pure-pw useradd sambausername -u sambausername -g sambausername -d /boxes/box #-u <username> -g <group> -d <home>
