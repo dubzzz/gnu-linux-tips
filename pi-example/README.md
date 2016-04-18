@@ -37,6 +37,8 @@ Available choices:
 OpenVPN installation is described at:
 https://github.com/dubzzz/gnu-linux-tips/blob/master/openvpn/README.md
 
+Close all traffic coming from OpenVPN network by default.
+
 #### FTP Setup
 
 FTP installation is described at:
