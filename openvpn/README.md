@@ -129,6 +129,8 @@ Prevent the machine from logging on the VPN automatically
 root@client:~$ update-rc.d openvpn remove
 ```
 
+Note: if you want to use a signed certificate with a password, you can store this password on your file system. It must me owned by root:root with rights 400 or 500 (if it can be run).
+
 # OpenVPN for Windows
 
 [Available on OpenVPN official website](https://openvpn.net/index.php/open-source/downloads.html)
