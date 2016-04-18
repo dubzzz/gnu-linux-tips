@@ -49,6 +49,11 @@ root@server:~$ echo "yes" > /etc/pure-ftpd/conf/NoAnonymous
 root@server:~$ echo "113 002" > /etc/pure-ftpd/conf/Umask #file=664/folder=775 for consitency with samba
 ```
 
+Don't forget to restart pure-ftpd service after any modifications of its configuration using:
+```bash
+root@server:~$ service pure-ftpd restart
+```
+
 #### Restrict FTP to OpenVPN users
 
 There is no need to expose FTP to users outside of the VPN. Users in local network will have a network drive shared using Samba, users outside of the network should not be granted any accesses except when connecting in the provided VPN.
