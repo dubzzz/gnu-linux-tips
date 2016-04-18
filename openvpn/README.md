@@ -25,7 +25,7 @@ root@server:~$ cd ~/openvpn/
 
 Then,
 ```bash
-root@server:~/<openvpn>/$ vim vars #increase key size to 2048, KEY_SIZE=2048
+root@server:~/<openvpn>/$ vim vars #increase key size to 2048, KEY_SIZE=2048 => /etc/openvpn/server.conf "dh dh2048.pem"
 root@server:~/<openvpn>/$ . ./vars
 root@server:~/<openvpn>/$ ./clean-all
 root@server:~/<openvpn>/$ ./build-ca
