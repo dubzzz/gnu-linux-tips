@@ -1,5 +1,20 @@
 # Example of Raspberry PI configuration
 
+## Bye-bye to your internet provider DNS
+
+Edit /etc/network/interfaces by adding the DNS of your choice:
+```bash
+iface eth0 inet manual
+    dns-nameservers 208.67.222.222 208.67.222.220
+```
+
+And restart the network interface (here eth0):
+```bash
+sudo ifdown eth0 && sudo ifup eth0
+```
+
+The file /etc/resolv.conf should contain your DNS servers.
+
 ## Remote storage as local network drive
 
 In that section, Raspberry PI can be seen as an always running machine without lots of storage.
