@@ -79,6 +79,17 @@ root@server:~$ cd /etc/openvpn && openvpn server.conf #server
 root@client:~$ cd /etc/openvpn && openvpn client.conf #client
 ```
 
+NOTE: Assign static ip to user
+```bash
+root@server:~$ mkdir /etc/openvpn/ccd
+```
+
+In /etc/openvpn/server.conf, add the line:
+```client-config-dir ccd```
+
+Edit /etc/openvpn/ccd/<client-name>
+```ifconfig-push 10.8.0.100 10.8.0.101```
+
 ## Who needs what?
 
 Both server and client:
