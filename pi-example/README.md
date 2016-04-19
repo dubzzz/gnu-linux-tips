@@ -2,7 +2,7 @@
 
 ## Bye-bye to your internet provider DNS
 
-Edit /etc/network/interfaces by adding the DNS of your choice:
+Edit /etc/network/interfaces by adding the DNS of your choice (OpenDNS is nice):
 ```bash
 iface eth0 inet manual
     dns-nameservers 208.67.222.222 208.67.222.220
