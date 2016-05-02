@@ -2,18 +2,20 @@
 
 ## Bye-bye to your internet provider DNS
 
-Edit /etc/network/interfaces by adding the DNS of your choice (OpenDNS is nice):
+Edit /etc/resolv.conf:
 ```bash
-iface eth0 inet manual
-    dns-nameservers 208.67.222.222 208.67.222.220
+nameserver 208.67.222.222
+nameserver 208.67.222.220
 ```
 
-And restart the network interface (here eth0):
+Then run the following command to block the modification of the file:
 ```bash
-sudo ifdown eth0 && sudo ifup eth0
+root@server:~$ chattr +i /etc/resolv.conf
 ```
 
-The file /etc/resolv.conf should contain your DNS servers.
+It will block all future modification of the file until someone run the command with -i on this file.
+
+### 
 
 ## Remote storage as local network drive
 
