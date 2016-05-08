@@ -15,6 +15,12 @@ root@server:~$ chattr +i /etc/resolv.conf
 
 It will block all future modification of the file until someone run the command with -i on this file.
 
+If your server has a static IP address, you might want to add its IP address to known hosts of your machine. Do do that edit the file /etc/hosts and add the line:
+```bash
+xxx.yyy.zzz.ttt domain.ext
+```
+Where xxx.yyy.zzz.ttt is the static IP of the server and domain.ext its name.
+
 ### 
 
 ## Remote storage as local network drive
