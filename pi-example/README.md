@@ -85,3 +85,51 @@ root@server:~$ service pure-ftpd restart
 There is no need to expose FTP to users outside of the VPN. Users in local network will have a network drive shared using Samba, users outside of the network should not be granted any accesses except when connecting in the provided VPN.
 
 Moreover, FTP is too usesafe to be exposed to external clients.
+
+## Firewall configuration
+
+For higher security in both local and vpn networks I suggest to increase firewall protection on the PI itself.
+Please run these commands carefully as they may block access to some of the running services.
+
+```bash
+root@server:~$ # Flush input rules, apply drop policy on inputs, do not kill exitsing connections and allow internal loop
+root@server:~$ iptables -F INPUT ; iptables -P INPUT DROP ; iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT ; iptables -I INPUT -i lo -j ACCEPT
+root@server:~$ # Apply accept policy on outputs and forward
+root@server:~$ iptables -P OUTPUT DROP ; iptables -P FORWARD DROP
+root@server:~$ # Allow ping from all interfaces (eth0, tun0...)
+root@server:~$ iptables -A INPUT -p icmp -j ACCEPT
+root@server:~$ # Limit SSH access to local network (on eth0 only) and VPN root server
+root@server:~$ iptables -A INPUT -p tcp -i eth0 --dport ssh -j ACCEPT
+root@server:~$ iptables -A INPUT -p tcp -i tun0 -s 10.8.0.1 --dport ssh -j ACCEPT
+root@server:~$ # Limit FTP access to VPN users only
+root@server:~$ iptables -A INPUT -p tcp -i tun0 -s 10.8.0.0/24 --dport ftp -j ACCEPT
+root@server:~$ # Limit Samba access to local network
+root@server:~$ iptables -A INPUT -p tcp -i eth0 --dport 137 -j ACCEPT
+root@server:~$ iptables -A INPUT -p tcp -i eth0 --dport 138 -j ACCEPT
+root@server:~$ iptables -A INPUT -p tcp -i eth0 --dport 139 -j ACCEPT
+root@server:~$ iptables -A INPUT -p tcp -i eth0 --dport 445 -j ACCEPT
+```
+
+Test the whole configuration. Once perfectly tested you can save this configuration in order to use it at each reboot. More details at https://debian-administration.org/article/445/Getting_IPTables_to_survive_a_reboot.
+
+Save the current configuration:
+```bash
+root@server:~$ iptables-save > /etc/firewall.conf
+root@server:~$ chmod 400 /etc/firewall.conf
+```
+
+Create and edit the file /etc/network/if-up.d/iptables
+```bash
+#!/bin/sh
+iptables-restore < /etc/firewall.conf
+```
+
+Make it executable:
+```bash
+root@server:~$ chmod +x /etc/network/if-up.d/iptables
+```
+
+Reboot and the that the rules are still here by running:
+```bash
+root@server:~$ iptables -L -v
+```
