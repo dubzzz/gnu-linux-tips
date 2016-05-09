@@ -72,6 +72,7 @@ I personally chose to use the same user for both samba and ftp. I also advise yo
 root@server:~$ echo "yes" > /etc/pure-ftpd/conf/ChrootEveryone
 root@server:~$ echo "yes" > /etc/pure-ftpd/conf/NoAnonymous
 root@server:~$ echo "yes" > /etc/pure-ftpd/conf/NoChmod
+root@server:~$ echo "40000 40500" > /etc/pure-ftpd/conf/PassivePortRange
 root@server:~$ echo "113 002" > /etc/pure-ftpd/conf/Umask #file=664/folder=775 for consitency with samba
 ```
 
