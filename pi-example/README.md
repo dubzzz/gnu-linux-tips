@@ -118,6 +118,12 @@ root@server:~$ iptables-save > /etc/firewall.conf
 root@server:~$ chmod 400 /etc/firewall.conf
 ```
 
+Following lines might be removed from the configuration file firewall.conf:
+```bash
+:fail2ban-ssh - [0:0]
+-A fail2ban-ssh -j RETURN
+```
+
 Create and edit the file /etc/network/if-up.d/iptables
 ```bash
 #!/bin/sh
