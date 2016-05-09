@@ -192,6 +192,10 @@ root@internal:~$ update-rc.d remote-storage defaults
 
 Copy [ifupd-remote-storage.sh](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/ifupd-remote-storage.sh) into /etc/network/if-up.d/remote-storage.
 
+```bash
+root@internal:~$ chmod u+x /etc/network/if-up.d/remote-storage
+```
+
 ## Sources
 - http://lea-linux.org/documentations/SFTP_%26_RSSH_:_Cr%C3%A9er_un_serveur_de_fichiers_s%C3%A9curis%C3%A9
 - http://www.herethere.net/~samson/rssh_chroot.html
