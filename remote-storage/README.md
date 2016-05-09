@@ -196,6 +196,18 @@ Copy [ifupd-remote-storage.sh](https://raw.githubusercontent.com/dubzzz/gnu-linu
 root@internal:~$ chmod u+x /etc/network/if-up.d/remote-storage
 ```
 
+### No password
+
+If you don't want to enter the password each time you call the service, you can create a script like:
+```bash
+#!/bin/sh
+echo "password"
+```
+
+And change its mode to 500 and its owner to root.
+
+Then you have to add the option --extpass=/my/password/script to encfs command in start-shared script.
+
 ## Sources
 - http://lea-linux.org/documentations/SFTP_%26_RSSH_:_Cr%C3%A9er_un_serveur_de_fichiers_s%C3%A9curis%C3%A9
 - http://www.herethere.net/~samson/rssh_chroot.html
