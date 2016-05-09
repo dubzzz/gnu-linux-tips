@@ -27,6 +27,7 @@ A list of available settings can be found at https://doc.ubuntu-fr.org/pure-ftp.
 For instance:
 ```bash
 root@server:~$ echo "yes" > /etc/pure-ftpd/conf/ChrootEveryone
+root@server:~$ echo "40000 40500" > /etc/pure-ftpd/conf/PassivePortRange
 root@server:~$ echo "133 022" > /etc/pure-ftpd/conf/Umask #file=644/folder=755
 ```
 
