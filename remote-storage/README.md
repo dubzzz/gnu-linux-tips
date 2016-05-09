@@ -165,6 +165,12 @@ root@internal:~$ ./start-shared.sh #will ask you a password
 root@internal:~$ ./stop-shared.sh
 ```
 
+[Script 3: status shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/status-shared.sh)
+```bash
+# Status of the remote storage
+root@internal:~$ ./status-shared.sh
+```
+
 ## Sources
 - http://lea-linux.org/documentations/SFTP_%26_RSSH_:_Cr%C3%A9er_un_serveur_de_fichiers_s%C3%A9curis%C3%A9
 - http://www.herethere.net/~samson/rssh_chroot.html
