@@ -103,6 +103,7 @@ root@server:~$ iptables -A INPUT -p tcp -i eth0 --dport ssh -j ACCEPT
 root@server:~$ iptables -A INPUT -p tcp -i tun0 -s 10.8.0.1 --dport ssh -j ACCEPT
 root@server:~$ # Limit FTP access to VPN users only
 root@server:~$ iptables -A INPUT -p tcp -i tun0 -s 10.8.0.0/24 --dport ftp -j ACCEPT
+root@server:~$ iptables -A INPUT -p tcp -i tun0 -s 10.8.0.0/24 --dport 40000:40500 -j ACCEPT
 root@server:~$ # Limit Samba access to local network
 root@server:~$ iptables -A INPUT -p tcp -i eth0 --dport 137 -j ACCEPT
 root@server:~$ iptables -A INPUT -p udp -i eth0 --dport 138 -j ACCEPT
