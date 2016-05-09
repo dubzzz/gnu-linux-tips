@@ -141,3 +141,6 @@ Reboot and the that the rules are still here by running:
 ```bash
 root@server:~$ iptables -L -v
 ```
+
+And why doing the same on ip6tables?
+Maybe you should think dropping undesirable ipv6 traffic.
