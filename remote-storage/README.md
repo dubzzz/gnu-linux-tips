@@ -171,6 +171,23 @@ root@internal:~$ ./stop-shared.sh
 root@internal:~$ ./status-shared.sh
 ```
 
+## Auto-mount at startup
+
+### Register the new service
+
+Copy the scripts:
+- [start shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/start-shared.sh)
+- [stop shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/stop-shared.sh)
+- [status shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/status-shared.sh)
+into root's home. Adapt start shared to your needs (UID/GID and eventually password file)
+
+Copy the script [remote-storage.sh](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/remote-storage.sh) into /etc/init.d/remote-storage.
+
+```bash
+root@internal:~$ chmod u+x /etc/init.d/remote-storage
+root@internal:~$ update-rc.d remote-storage defaults
+```
+
 ## Sources
 - http://lea-linux.org/documentations/SFTP_%26_RSSH_:_Cr%C3%A9er_un_serveur_de_fichiers_s%C3%A9curis%C3%A9
 - http://www.herethere.net/~samson/rssh_chroot.html
