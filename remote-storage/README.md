@@ -193,7 +193,7 @@ root@internal:~$ update-rc.d remote-storage defaults
 Copy [ifupd-remote-storage.sh](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/ifupd-remote-storage.sh) into /etc/network/if-up.d/remote-storage.
 
 ```bash
-root@internal:~$ chmod u+x /etc/network/if-up.d/remote-storage
+root@internal:~$ chmod +x /etc/network/if-up.d/remote-storage
 ```
 
 ### No password
