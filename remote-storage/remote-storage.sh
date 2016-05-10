@@ -12,20 +12,20 @@
 case "$1" in
 start)
 	~root/start-shared.sh
-	exit 0
+	exit $?
 ;;
 stop)
 	~root/stop-shared.sh
-	exit 0
+	exit $?
 ;;
 restart)
 	~root/stop-shared.sh
 	~root/start-shared.sh
-	exit 0
+	exit $?
 ;;
 status)
 	~root/status-shared.sh
-	exit 0
+	exit $?
 ;;
 *)
 	echo "Usage: /etc/init.d/remote-storage {start|stop|restart|status}"
