@@ -10,4 +10,6 @@ $REMOTE status
 if [ $? -ne 0 ]; then
 	$REMOTE stop
 	$REMOTE start
+	exit $?
 fi
+exit 0
