@@ -1,7 +1,7 @@
 #!/bin/sh
 ### BEGIN INIT INFO
 # Provides:          remote-storage
-# Required-Start:    $network $remote_fs $syslog
+# Required-Start:    $all $network $remote_fs $syslog
 # Required-Stop:
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
