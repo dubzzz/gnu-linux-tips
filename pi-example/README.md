@@ -144,3 +144,7 @@ root@server:~$ iptables -L -v
 
 And why doing the same on ip6tables?
 Maybe you should think dropping undesirable ipv6 traffic.
+
+## Why not using a local storage as backup?
+
+Please refer to: [rsync-shared.sh](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/pi-example/rsync-shared.sh)
