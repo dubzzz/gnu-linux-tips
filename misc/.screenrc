@@ -1,0 +1,109 @@
+# Configuration Byobu-like
+# by Nicolas DUBIEN
+
+# See also: https://bbs.archlinux.org/viewtopic.php?pid=439833 * Leo2501
+
+terminfo * k1=\EOP
+terminfo * k2=\EOQ
+terminfo * k3=\EOR
+terminfo * k4=\EOS
+terminfo * k5=\E[15~
+terminfo * k6=\E[17~
+terminfo * k7=\E[18~
+terminfo * k8=\E[19~
+terminfo * k9=\E[20~
+terminfo * k;=\E[21~
+terminfo * F1=\E[23~
+terminfo * F2=\E[24~
+
+# New window
+bindkey -k k2 screen bash
+# Next and previous windows
+bindkey -k k3 prev
+bindkey -k k4 next
+
+# Detach the screen
+bindkey -k k6 detach
+
+# Create a vertical split
+bindkey -k F1 split -v
+# Create a horizontal split
+bindkey -k F2 split
+# Move to next split (CTRL + TAB)
+bindkey "^[[27;5;9~" focus down
+# Move to previous split (CTRL + SPACE)
+bindkey "^@" focus up
+# Kill current split
+bindkey -k k; remove
+
+# Fit to window size
+bindkey -k k5 fit
+# Reload .screenrc (CTRL + F5)
+bindkey ";5~" source $HOME/.screenrc
+# Refresh the display
+bindkey -k k1 redisplay
+
+# Save buffer of current window to file
+bindkey -k k7 hardcopy -h $HOME/screen-buffer.log
+
+# Ctrl+F1 = F1
+#bindkey -k ^[O5P bind \EOP
+
+# Second toolbar
+#caption always "%{kB}%?%-Lw%?%{bw}%n*%f %t%?(%u)%?%{kB}%?%+Lw%?"
+
+# Window list at the bottom.
+#hardstatus alwayslastline
+#hardstatus string "%-w%{= BW}%50>%n %t%{-}%+w%<"
+
+## Cool
+#hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+
+#hardstatus string "%w"
+#hardstatus string "%{.kW}%-w%{.W}%n %t%{-}%{=b kw}%?%+w%?"            #B&W
+#hardstatus string "%{.kW}%-w%{.W}%n %t%{-}%{=b kw}%?%+w%? %=%c %d/%m/%Y" #B&W & date&time
+
+## Cool
+#hardstatus string '%{= R}[%{w}%H%{R}][%{w}%=%?%-Lw%?%{R}%n*%f%t%?(%u)%? %{w}%?%+Lw%?%?%=%{R}][%{w}%m/%d %{W}%C%A%{R}]'
+
+#hardstatus string "%{.kW}%-w%{.W}%n %t%{-}%+w %=%C %a "
+#hardstatus string "%{=b kw} %?%-Lw%?%{=br kw}[%n %t]%{=b kw}%?%+Lw%? %="
+
+## CPU load + time
+#hardstatus alwayslastline '%{bk}[ %{W}%H %{b}][ %{w}%l%{b} ]   %{b}[%{w} %D %d.%m %c:%s%{b} ]'
+
+#hardstatus alwayslastline '%{bk}[%{W}%H%{b}] %{w} %l %= %n*%t%{-b r}%{w}%+w %= %{w}%d %D %{w}%c'
+#hardstatus alwayslastline '%{wk}[ %{g}][%= %{wk}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{g}][%{Y}%l%{g}]%{=b C}[ %m/%d %c ]%{W}'
+
+backtick 0 10 10 awk '{ printf "%sC", $2 }' /proc/acpi/thermal_zone/THRM/temperature
+
+backtick 1 60 60 awk '{if ($1=="MemTotal:") mt = $2; if ($1=="MemFree:") mm = $2; if ($1=="Buffers:") mb = $2; if ($1=="Cached:") mc = $2} END {printf ("%2.1f"), ((mt-(mm+mb+mc)) * 100 / mt);print "%M"}' /proc/meminfo
+
+backtick 2 60 50 awk '{if ($1=="SwapFree:") fs = $2; if ($1=="SwapTotal:") ts = $2} END {printf ("%2.1f"),((ts-fs) * 100 / ts );print "%S"}' /proc/meminfo
+
+caption always '%{gw} %=%{wk} %?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%{b C}'
+hardstatus alwayslastline '%{g}[ %{W}%H %{g}][ %{W}%0` %1` %2` %{g}]%=[ %{Y}%l%{g} ]%{=b C}[ %d/%m/%Y %c:%s%{b C} ]'
+#hardstatus alwayslastline '%{gk}[ %{W}%H %{g}][ %{W}%0` %1` %2` %{g}][%= %{wk}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{g}][%{Y}%l%{g}]%{=b C}[ %d/%m/%Y %c:%s%{b C} ]'
+
+# From Stephen Shirley
+# Don't block command output if the terminal stops responding
+# (like if the ssh connection times out for example).
+nonblock on
+
+# Allow editors etc. to restore display on exit
+# rather than leaving existing text in place
+altscreen on
+
+# Used in order to support scrolling
+termcapinfo xterm ti@:te@
+termcapinfo xterm-color ti@:te@
+
+# Increase the default size of the scrollback buffer
+defscrollback 1024
+
+multiuser on
+startup_message off
+
+#screen -t HTOP 0 htop
+#screen -t bash 1 bash
+#select 1
