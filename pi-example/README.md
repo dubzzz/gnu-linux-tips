@@ -145,6 +145,56 @@ root@server:~$ iptables -L -v
 And why doing the same on ip6tables?
 Maybe you should think dropping undesirable ipv6 traffic.
 
-## Why not using a local storage as backup?
+## USB hard-drive on PI as backup
 
-Please refer to: [rsync-shared.sh](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/pi-example/rsync-shared.sh)
+If you do not have RAID option on the distant machine and want to make sure that your data will not be lost forever if you lose your distant's hard-drive, I suggest you to do a backup on an USB drive connected to your PI.
+
+The configuration is quite easy.
+
+- Plug the USB drive to the PI
+- List available partitions in it (ideally I would suggest to start with a cleaned partition in ext4 format)
+
+```bash
+root@server:~$ # List the available drives
+root@server:~$ fdisk -l
+root@server:~$ # Specific to yours (replace /dev/sd[a-z] by your drive)
+root@server:~$ fdisk /dev/sd[a-z]
+```
+
+- (optional) Format the drive
+
+```bash
+root@server:~$ fdisk /dev/sd[a-z]
+root@server:~$ mkfs.ext4 /dev/sd[a-z]
+```
+
+- Find disk the UUID of your disk
+
+```bash
+root@server:~$ ls -alh /dev/disk/by-uuid/
+```
+
+- Auto-mount drive at start-up by adding a line in /etc/fstab (replace xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx by your uuid)
+
+```bash
+UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx  /backup      ext4    defaults,errors=remount-ro 0       1
+```
+
+- Reload fstab
+
+```bash
+root@server:~$ mount -a
+```
+
+- Copy the script [rsync-shared.sh](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/pi-example/rsync-shared.sh) into ~root/rsync-shared.sh
+- Add a cron task to launch it automatically
+
+```bash
+root@server:~$ crontab -e
+```
+
+And add a line like this one (rsync every 6 hours):
+
+```bash
+0 */6 * * * ~root/rsync-remote.sh
+```
