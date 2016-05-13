@@ -198,3 +198,10 @@ And add a line like this one (rsync every 6 hours):
 ```bash
 0 */6 * * * ~root/rsync-remote.sh
 ```
+
+## Syncing your phone's data automatically
+
+First of all download the app [Termux](https://play.google.com/store/apps/details?id=com.termux&hl=fr) on your Android mobile phone.
+Then run commands ```àpt-get install rsync``` from termux.
+
+More to come..
