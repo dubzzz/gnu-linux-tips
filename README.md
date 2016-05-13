@@ -4,7 +4,7 @@ General knowledge
 - [MBR and Partitions](https://github.com/dubzzz/gnu-linux-tips/blob/master/mbr/README.md)
 
 Services
-- Automatic backups with rsync
+- Automatic backups with rsync (quickly explained in [Raspberry PI & Remote configuration](https://github.com/dubzzz/gnu-linux-tips/blob/master/pi-example/README.md))
 - [FTP](https://github.com/dubzzz/gnu-linux-tips/blob/master/ftp/README.md)
 - [OpenVPN](https://github.com/dubzzz/gnu-linux-tips/blob/master/openvpn/README.md)
 - [RAID](https://github.com/dubzzz/gnu-linux-tips/blob/master/raid/README.md)
