@@ -10,7 +10,7 @@ nameserver 208.67.222.220
 
 Then run the following command to block the modification of the file:
 ```bash
-root@server:~$ chattr +i /etc/resolv.conf
+root@pi:~$ chattr +i /etc/resolv.conf
 ```
 
 It will block all future modification of the file until someone run the command with -i on this file.
@@ -69,16 +69,16 @@ https://github.com/dubzzz/gnu-linux-tips/blob/master/ftp/README.md#basic-ftp
 
 I personally chose to use the same user for both samba and ftp. I also advise you to add the following options to Pure-FTPd for a safer configuration:
 ```bash
-root@server:~$ echo "yes" > /etc/pure-ftpd/conf/ChrootEveryone
-root@server:~$ echo "yes" > /etc/pure-ftpd/conf/NoAnonymous
-root@server:~$ echo "yes" > /etc/pure-ftpd/conf/NoChmod
-root@server:~$ echo "40000 40500" > /etc/pure-ftpd/conf/PassivePortRange
-root@server:~$ echo "113 002" > /etc/pure-ftpd/conf/Umask #file=664/folder=775 for consitency with samba
+root@pi:~$ echo "yes" > /etc/pure-ftpd/conf/ChrootEveryone
+root@pi:~$ echo "yes" > /etc/pure-ftpd/conf/NoAnonymous
+root@pi:~$ echo "yes" > /etc/pure-ftpd/conf/NoChmod
+root@pi:~$ echo "40000 40500" > /etc/pure-ftpd/conf/PassivePortRange
+root@pi:~$ echo "113 002" > /etc/pure-ftpd/conf/Umask #file=664/folder=775 for consitency with samba
 ```
 
 Don't forget to restart pure-ftpd service after any modifications of its configuration using:
 ```bash
-root@server:~$ service pure-ftpd restart
+root@pi:~$ service pure-ftpd restart
 ```
 
 #### Restrict FTP to OpenVPN users
@@ -93,31 +93,31 @@ For higher security in both local and vpn networks I suggest to increase firewal
 Please run these commands carefully as they may block access to some of the running services.
 
 ```bash
-root@server:~$ # Flush input rules, apply drop policy on inputs, do not kill exitsing connections and allow internal loop
-root@server:~$ iptables -F INPUT ; iptables -P INPUT DROP ; iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT ; iptables -I INPUT -i lo -j ACCEPT
-root@server:~$ # Apply accept policy on outputs and forward
-root@server:~$ iptables -P OUTPUT DROP ; iptables -P FORWARD DROP
-root@server:~$ # Allow ping from all interfaces (eth0, tun0...)
-root@server:~$ iptables -A INPUT -p icmp -j ACCEPT
-root@server:~$ # Limit SSH access to local network (on eth0 only) and VPN root server
-root@server:~$ iptables -A INPUT -p tcp -i eth0 --dport ssh -j ACCEPT
-root@server:~$ iptables -A INPUT -p tcp -i tun0 -s 10.8.0.1 --dport ssh -j ACCEPT
-root@server:~$ # Limit FTP access to VPN users only
-root@server:~$ iptables -A INPUT -p tcp -i tun0 -s 10.8.0.0/24 --dport ftp -j ACCEPT
-root@server:~$ iptables -A INPUT -p tcp -i tun0 -s 10.8.0.0/24 --dport 40000:40500 -j ACCEPT
-root@server:~$ # Limit Samba access to local network
-root@server:~$ iptables -A INPUT -p tcp -i eth0 --dport 137 -j ACCEPT
-root@server:~$ iptables -A INPUT -p udp -i eth0 --dport 138 -j ACCEPT
-root@server:~$ iptables -A INPUT -p udp -i eth0 --dport 139 -j ACCEPT
-root@server:~$ iptables -A INPUT -p tcp -i eth0 --dport 445 -j ACCEPT
+root@pi:~$ # Flush input rules, apply drop policy on inputs, do not kill exitsing connections and allow internal loop
+root@pi:~$ iptables -F INPUT ; iptables -P INPUT DROP ; iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT ; iptables -I INPUT -i lo -j ACCEPT
+root@pi:~$ # Apply accept policy on outputs and forward
+root@pi:~$ iptables -P OUTPUT DROP ; iptables -P FORWARD DROP
+root@pi:~$ # Allow ping from all interfaces (eth0, tun0...)
+root@pi:~$ iptables -A INPUT -p icmp -j ACCEPT
+root@pi:~$ # Limit SSH access to local network (on eth0 only) and VPN root server
+root@pi:~$ iptables -A INPUT -p tcp -i eth0 --dport ssh -j ACCEPT
+root@pi:~$ iptables -A INPUT -p tcp -i tun0 -s 10.8.0.1 --dport ssh -j ACCEPT
+root@pi:~$ # Limit FTP access to VPN users only
+root@pi:~$ iptables -A INPUT -p tcp -i tun0 -s 10.8.0.0/24 --dport ftp -j ACCEPT
+root@pi:~$ iptables -A INPUT -p tcp -i tun0 -s 10.8.0.0/24 --dport 40000:40500 -j ACCEPT
+root@pi:~$ # Limit Samba access to local network
+root@pi:~$ iptables -A INPUT -p tcp -i eth0 --dport 137 -j ACCEPT
+root@pi:~$ iptables -A INPUT -p udp -i eth0 --dport 138 -j ACCEPT
+root@pi:~$ iptables -A INPUT -p udp -i eth0 --dport 139 -j ACCEPT
+root@pi:~$ iptables -A INPUT -p tcp -i eth0 --dport 445 -j ACCEPT
 ```
 
 Test the whole configuration. Once perfectly tested you can save this configuration in order to use it at each reboot. More details at https://debian-administration.org/article/445/Getting_IPTables_to_survive_a_reboot.
 
 Save the current configuration:
 ```bash
-root@server:~$ iptables-save > /etc/firewall.conf
-root@server:~$ chmod 400 /etc/firewall.conf
+root@pi:~$ iptables-save > /etc/firewall.conf
+root@pi:~$ chmod 400 /etc/firewall.conf
 ```
 
 Following lines might be removed from the configuration file firewall.conf:
@@ -134,12 +134,12 @@ iptables-restore < /etc/firewall.conf
 
 Make it executable:
 ```bash
-root@server:~$ chmod +x /etc/network/if-up.d/iptables
+root@pi:~$ chmod +x /etc/network/if-up.d/iptables
 ```
 
 Reboot and the that the rules are still here by running:
 ```bash
-root@server:~$ iptables -L -v
+root@pi:~$ iptables -L -v
 ```
 
 And why doing the same on ip6tables?
@@ -155,23 +155,23 @@ The configuration is quite easy.
 - List available partitions in it (ideally I would suggest to start with a cleaned partition in ext4 format)
 
 ```bash
-root@server:~$ # List the available drives
-root@server:~$ fdisk -l
-root@server:~$ # Specific to yours (replace /dev/sd[a-z] by your drive)
-root@server:~$ fdisk /dev/sd[a-z]
+root@pi:~$ # List the available drives
+root@pi:~$ fdisk -l
+root@pi:~$ # Specific to yours (replace /dev/sd[a-z] by your drive)
+root@pi:~$ fdisk /dev/sd[a-z]
 ```
 
 - (optional) Format the drive
 
 ```bash
-root@server:~$ fdisk /dev/sd[a-z]
-root@server:~$ mkfs.ext4 /dev/sd[a-z]
+root@pi:~$ fdisk /dev/sd[a-z]
+root@pi:~$ mkfs.ext4 /dev/sd[a-z]
 ```
 
 - Find disk the UUID of your disk
 
 ```bash
-root@server:~$ ls -alh /dev/disk/by-uuid/
+root@pi:~$ ls -alh /dev/disk/by-uuid/
 ```
 
 - Auto-mount drive at start-up by adding a line in /etc/fstab (replace xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx by your uuid)
@@ -183,14 +183,14 @@ UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx  /backup      ext4    defaults,errors=
 - Reload fstab
 
 ```bash
-root@server:~$ mount -a
+root@pi:~$ mount -a
 ```
 
 - Copy the script [rsync-shared.sh](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/pi-example/rsync-shared.sh) into ~root/rsync-shared.sh
 - Add a cron task to launch it automatically
 
 ```bash
-root@server:~$ crontab -e
+root@pi:~$ crontab -e
 ```
 
 And add a line like this one (rsync every 6 hours):
@@ -202,6 +202,55 @@ And add a line like this one (rsync every 6 hours):
 ## Syncing your phone's data automatically
 
 First of all download the app [Termux](https://play.google.com/store/apps/details?id=com.termux&hl=fr) on your Android mobile phone.
-Then run commands ```àpt-get install rsync``` from termux.
+Then run commands ```àpt-get install rsync``` and ```àpt-get install ssh``` from termux.
 
-More to come..
+The following configuration will make your phone able to sync its data towards the remote storage. It requires that both the phone and the Raspberry PI (or clear directory) connects to the VPN. The PI must provide a ssh access to the phone.
+
+- Adapt iptables rules to give ssh access to the PI from machines running on the VPN. Ideally it would be great to narrow the range of machines able to access the ssh of the PI by adding a white list of MAC addresses for machines other than 10.8.0.1. Unfortunately it seems that the MAC of the phone is neither the wlan0 nor the telecom MAC when connected inside the VPN.
+
+```bash
+root@pi:~$ # No MAC filtering
+root@pi:~$ iptables -A INPUT -p tcp -i tun0 -s 10.8.0.0/24 --dport ssh -j ACCEPT
+root@pi:~$ # MAC filtering but does not seem to works when running inside the VPN
+root@pi:~$ iptables -A INPUT -p tcp -i tun0 -s 10.8.0.0/24 -m mac --mac-source 00:11:22:33:44:55 --dport ssh -j ACCEPT
+```
+
+You may want to update /etc/firewall.conf after this change in order to make it available at next start. Please refer to previous parts to have more details on how you can do that.
+
+- Allow <sambausername> to connect through VPN access
+
+Edit /etc/ssh/sshd_config by modifying or adding:
+```bash
+AllowUsers pi sambausername
+
+Match User sambausername
+    AllowTCPForwarding no
+    X11Forwarding no
+    PasswordAuthentication no
+```
+
+And restart ssh service: ```service ssh restart```
+
+- Generate ssh public key on your phone
+
+````bash
+termux@phone:~$ ssh-keygen -b 4096 -t rsa
+termux@phone:~$ # Send .ssh/id_rsa.pub to the PI
+```
+
+````bash
+sambausername@pi:~$ cat id_rsa_phone.pub >> ~sambausername/.ssh/authorized_keys
+```
+
+- Create a script on your phone like this one:
+
+```bash
+# Assumption: your PI has a fixed IP in the VPN (can be set easily using OpenVPN)
+# IP would be 10.8.0.2 in the example
+ifconfig | grep tun0 && rsync -e ssh -zv -rtgoD --exclude '.*' --exclude '*thumbnail*' /sdcard/DCIM sambausername@10.8.0.2:/boxes/box/.backup/sdcard/
+ifconfig | grep tun0 && rsync -e ssh -zv -rtgoD --exclude '.*' --exclude '*thumbnail*' /sdcard/Snapchat sambausername@10.8.0.2:/boxes/box/.backup/sdcard/
+ifconfig | grep tun0 && rsync -e ssh -zv -rtgoD --exclude '.*' --exclude '*thumbnail*' /sdcard1/DCIM sambausername@10.8.0.2:/boxes/box/.backup/sdcard1/
+ifconfig | grep tun0 && rsync -e ssh -zv -rtgoD --exclude '.*' --exclude '*thumbnail*' /sdcard1/Pictures sambausername@10.8.0.2:/boxes/box/.backup/sdcard1/
+```
+
+- Launch it automatically... to be done...
