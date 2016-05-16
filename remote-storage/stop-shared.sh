@@ -3,7 +3,7 @@
 echo -n "Stopping Samba server in order to unlock shared drives"
 
 echo -n "."
-service smbd stop
+/usr/sbin/service smbd stop
 if [ $? -ne 0 ]; then
         echo "Failed to stop Samba server"
         exit 1
