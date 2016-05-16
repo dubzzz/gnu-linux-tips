@@ -16,7 +16,7 @@ else
         exit 2
 fi
 
-ret=$(service smbd status)
+ret=$(/usr/sbin/service smbd status)
 if [ $? -eq 0 ]; then
         echo "Samba: OK"
 else
