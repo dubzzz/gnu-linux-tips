@@ -54,7 +54,7 @@ fi
 echo ""
 echo "Starting Samba server"
 echo -n "."
-service smbd start
+/usr/sbin/service smbd start
 
 echo ""
 echo "DONE"
