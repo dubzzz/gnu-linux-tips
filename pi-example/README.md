@@ -247,10 +247,10 @@ sambausername@pi:~$ cat id_rsa_phone.pub >> ~sambausername/.ssh/authorized_keys
 ```bash
 # Assumption: your PI has a fixed IP in the VPN (can be set easily using OpenVPN)
 # IP would be 10.8.0.2 in the example
-ifconfig | grep tun0 && rsync -e ssh -zv -rtgoD --exclude '.*' --exclude '*thumbnail*' /sdcard/DCIM sambausername@10.8.0.2:/boxes/box/.backup/sdcard/
-ifconfig | grep tun0 && rsync -e ssh -zv -rtgoD --exclude '.*' --exclude '*thumbnail*' /sdcard/Snapchat sambausername@10.8.0.2:/boxes/box/.backup/sdcard/
-ifconfig | grep tun0 && rsync -e ssh -zv -rtgoD --exclude '.*' --exclude '*thumbnail*' /sdcard1/DCIM sambausername@10.8.0.2:/boxes/box/.backup/sdcard1/
-ifconfig | grep tun0 && rsync -e ssh -zv -rtgoD --exclude '.*' --exclude '*thumbnail*' /sdcard1/Pictures sambausername@10.8.0.2:/boxes/box/.backup/sdcard1/
+ifconfig | grep tun0 && rsync -e ssh -zz -v -rtgoD --exclude '.*' --exclude '*thumbnail*' /sdcard/DCIM sambausername@10.8.0.2:/boxes/box/.backup/sdcard/
+ifconfig | grep tun0 && rsync -e ssh -zz -v -rtgoD --exclude '.*' --exclude '*thumbnail*' /sdcard/Snapchat sambausername@10.8.0.2:/boxes/box/.backup/sdcard/
+ifconfig | grep tun0 && rsync -e ssh -zz -v -rtgoD --exclude '.*' --exclude '*thumbnail*' /sdcard1/DCIM sambausername@10.8.0.2:/boxes/box/.backup/sdcard1/
+ifconfig | grep tun0 && rsync -e ssh -zz -v -rtgoD --exclude '.*' --exclude '*thumbnail*' /sdcard1/Pictures sambausername@10.8.0.2:/boxes/box/.backup/sdcard1/
 ```
 
 - Launch it automatically... to be done...
