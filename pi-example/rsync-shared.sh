@@ -18,4 +18,12 @@ else
 fi
 
 mkdir -p /backup/data
+
+cat /proc/mounts | grep "/boxes/box" && mkdir -p /boxes/box/.log
+/usr/sbin/smartctl -a /dev/sda > /boxes/box/.log/.backup.details
+/usr/sbin/smartctl --health /dev/sda > /boxes/box/.log/.backup.health
+date > /boxes/box/.log/.backup.laststart
+
 rsync -e ssh -zv -rtgoD --delete --log-file=/backup/rsync-from-srv.log --exclude '.ssh/*' scpuser@distant:. /backup/data/
+
+cp /backup/rsync-from-srv.log /boxes/box/.log/.backup.logs
