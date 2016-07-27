@@ -212,7 +212,12 @@ Then you have to add the option --extpass=/my/password/script to encfs command i
 
 Add the following query to your crontab (as root): `crontab -e`
 ```bash
+# restart if down
 */5 * * * * /etc/init.d/remote-storage status || /etc/init.d/remote-storage restart
+
+# or even more powerfull
+# force restart if down
+*/5 * * * * /etc/init.d/remote-storage status || (/etc/init.d/remote-storage stop && /etc/init.d/remote-storage start) || (fuser -k /boxes/box ; fuser -k /boxes/.box_enc ; /etc/init.d/remote-storage restart)
 ```
 
 ## Sources
