@@ -208,6 +208,13 @@ And change its mode to 500 and its owner to root.
 
 Then you have to add the option --extpass=/my/password/script to encfs command in start-shared script.
 
+## Auto-mount if disconnected
+
+Add the following query to your crontab (as root): `crontab -e`
+```bash
+*/5 * * * * /etc/init.d/remote-storage status || /etc/init.d/remote-storage restart
+```
+
 ## Sources
 - http://lea-linux.org/documentations/SFTP_%26_RSSH_:_Cr%C3%A9er_un_serveur_de_fichiers_s%C3%A9curis%C3%A9
 - http://www.herethere.net/~samson/rssh_chroot.html
