@@ -217,7 +217,7 @@ Add the following query to your crontab (as root): `crontab -e`
 
 # or even more powerfull
 # force restart if down
-*/5 * * * * /etc/init.d/remote-storage status || (/etc/init.d/remote-storage stop && /etc/init.d/remote-storage start) || (fuser -k /boxes/box ; fuser -k /boxes/.box_enc ; /etc/init.d/remote-storage restart)
+*/5 * * * * ret=$(/etc/init.d/remote-storage status) ; rc=$? ; if [ "$rc" -ne 0 ]; then if [ "$rc" -lt 10 ]; then echo "REMOTE DRIVE NOT STARTED"; /etc/init.d/remote-storage restart; else echo "REMOTE DRIVE UNACCESSIBLE"; (/etc/init.d/remote-storage stop && /etc/init.d/remote-storage start) || (fuser -k /boxes/box ; fuser -k /boxes/.box_enc ; /etc/init.d/remote-storage restart); fi; fi
 ```
 
 ## Sources
