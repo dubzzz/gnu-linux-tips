@@ -247,10 +247,25 @@ sambausername@pi:~$ cat id_rsa_phone.pub >> ~sambausername/.ssh/authorized_keys
 ```bash
 # Assumption: your PI has a fixed IP in the VPN (can be set easily using OpenVPN)
 # IP would be 10.8.0.2 in the example
-ifconfig | grep tun0 && rsync -e ssh -zz -v -rtgoD --exclude '.*' --exclude '*thumbnail*' /sdcard/DCIM sambausername@10.8.0.2:/boxes/box/.backup/sdcard/
-ifconfig | grep tun0 && rsync -e ssh -zz -v -rtgoD --exclude '.*' --exclude '*thumbnail*' /sdcard/Snapchat sambausername@10.8.0.2:/boxes/box/.backup/sdcard/
-ifconfig | grep tun0 && rsync -e ssh -zz -v -rtgoD --exclude '.*' --exclude '*thumbnail*' /sdcard1/DCIM sambausername@10.8.0.2:/boxes/box/.backup/sdcard1/
-ifconfig | grep tun0 && rsync -e ssh -zz -v -rtgoD --exclude '.*' --exclude '*thumbnail*' /sdcard1/Pictures sambausername@10.8.0.2:/boxes/box/.backup/sdcard1/
+# Do remove --remove-source-files if you want to keep the files on your phone
+backupdir=$(date +%d%m%Y-%H%M%S)
+dest="/boxes/box/.backup"
+
+ifconfig | grep tun0 && rsync -e ssh -zz -v -rtgoD --remove-source-files --backup-dir="${dest}/sdcard-${backupdir}" --exclude '.*' --exclude '*thumbnail*' /sdcard/DCIM sambausername@10.8.0.2:${dest}/sdcard/
+ifconfig | grep tun0 && rsync -e ssh -zz -v -rtgoD --remove-source-files --backup-dir="${dest}/sdcard-${backupdir}" --exclude '.*' --exclude '*thumbnail*' /sdcard/Snapchat sambausername@10.8.0.2:${dest}/sdcard/
+ifconfig | grep tun0 && rsync -e ssh -zz -v -rtgoD --remove-source-files --backup-dir="${dest}/sdcard1-${backupdir}" --exclude '.*' --exclude '*thumbnail*' /sdcard1/DCIM sambausername@10.8.0.2:${dest}/sdcard1/
+ifconfig | grep tun0 && rsync -e ssh -zz -v -rtgoD --remove-source-files --backup-dir="${dest}/sdcard1-${backupdir}" --exclude '.*' --exclude '*thumbnail*' /sdcard1/Pictures sambausername@10.8.0.2:${dest}/sdcard1/
+```
+
+Please not that if this script is interrupted during its execution (for eg.: network down), it might leave backup directories on the destination. You can clean these empty backupd by running the commands:
+
+```bash
+root@pi:~$ cd /boxes/box/.backup/
+root@pi:~$ find . -type d -empty -exec rmdir {} \;
 ```
 
 - Launch it automatically... to be done...
+
+## Access from Google Drive and other cloud solutions
+
+It might be interesting to have a look to `rclone`. Having access to a limited subset of the storage from classic cloud services can be very useful. Data of those directories will be accessible within the inetrnal network as part of the drive and outside the network as basic cloud solutions.
