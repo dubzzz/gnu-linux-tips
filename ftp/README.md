@@ -37,5 +37,12 @@ root@server:~$ echo "133 022" > /etc/pure-ftpd/conf/Umask #file=644/folder=755
 root@server:~$ service pure-ftpd restart
 ```
 
+### Useful commands
+
+```bash
+root@server:~$ # Change password of the user toto
+root@server:~$ pure-pw passwd toto -m
+```
+
 Sources:
 - [Ubuntu FR](https://doc.ubuntu-fr.org/pure-ftp)
