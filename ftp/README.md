@@ -40,7 +40,7 @@ root@server:~$ service pure-ftpd restart
 ### Useful commands
 
 ```bash
-root@server:~$ # Change password of the user toto
+# Change password of the user toto
 root@server:~$ pure-pw passwd toto -m
 ```
 
