@@ -144,6 +144,12 @@ root@internal:~$ service smbd restart
 ```
 [Example](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/smb.conf)
 
+Useful commands
+```bash
+root@server:~$ # Change password of the user toto
+root@server:~$ smbpasswd -a toto
+```
+
 ## Mount the drive by script
 
 Create a public key for root user of internal and send it to remote machine in order to be able to log as scpuser (add it to authorized_keys of scpuser as done above).
