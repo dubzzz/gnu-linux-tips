@@ -146,7 +146,7 @@ root@internal:~$ service smbd restart
 
 Useful commands
 ```bash
-root@server:~$ # Change password of the user toto
+# Change password of the user toto
 root@server:~$ smbpasswd -a toto
 ```
 
