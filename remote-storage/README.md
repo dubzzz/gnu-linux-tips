@@ -162,7 +162,7 @@ cat /etc/passwd | grep sambausername #find uid/gid of the user sambausername
 [Script: start/stop/restart shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/remote-script.sh)
 ```bash
 # Mount remote drive and start samba
-root@internal:~$ ./remote-script.sh start #does not ask you a password, use force-start to force the start when partially started
+root@internal:~$ ./remote-script.sh start #does not ask you a password, use force-start to force the start when partially started (force-start, starts missing parts only -- start fails if something has already been started before)
 # Unmount remote drive and stop samba
 root@internal:~$ ./remote-script.sh stop #use force-stop to force (force might be dangerous as it force the unmount)
 # Restart the remote drive
@@ -210,12 +210,12 @@ Then you have to add the option --extpass=/my/password/script to encfs command i
 
 Add the following query to your crontab (as root): `crontab -e`
 ```bash
-# restart if down
-*/5 * * * * /etc/init.d/remote-storage status || /etc/init.d/remote-storage restart
+# restart if down (or partially down)
+*/5 * * * * /etc/init.d/remote-storage status || /etc/init.d/remote-storage force-start
 
 # or even more powerfull
 # force restart if down
-*/5 * * * * /etc/init.d/remote-storage status || /etc/init.d/remote-storage restart || (/etc/init.d/remote-storage stop && /etc/init.d/remote-storage force-start) || /etc/init.d/remote-storage force-restart force-restart
+*/5 * * * * /etc/init.d/remote-storage status || /etc/init.d/remote-storage force-start || /etc/init.d/remote-storage restart || remote-storage force-restart
 ```
 
 ## Sources
