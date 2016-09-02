@@ -176,10 +176,8 @@ root@internal:~$ ./remote-script.sh status
 ### Register the new service
 
 Copy the scripts:
-- [start shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/start-shared.sh)
-- [stop shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/stop-shared.sh)
-- [status shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/status-shared.sh)
-into root's home. Adapt start shared to your needs (UID/GID and eventually password file)
+- [remote script](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/remote-script.sh)
+into root's home. Adapt the script variables to your needs (username, password, server and eventually password file)
 
 Copy the script [remote-storage.sh](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/remote-storage.sh) into /etc/init.d/remote-storage.
 
