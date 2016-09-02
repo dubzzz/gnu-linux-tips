@@ -9,26 +9,5 @@
 # Description:       Mount remote storage
 ### END INIT INFO
 
-case "$1" in
-start)
-	~root/start-shared.sh
-	exit $?
-;;
-stop)
-	~root/stop-shared.sh
-	exit $?
-;;
-restart)
-	~root/stop-shared.sh
-	~root/start-shared.sh
-	exit $?
-;;
-status)
-	~root/status-shared.sh
-	exit $?
-;;
-*)
-	echo "Usage: /etc/init.d/remote-storage {start|stop|restart|status}"
-	exit 1
-;;
-esac
+~root/remote-script.sh $1
+exit $?
