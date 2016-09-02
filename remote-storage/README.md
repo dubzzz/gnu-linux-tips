@@ -215,7 +215,7 @@ Add the following query to your crontab (as root): `crontab -e`
 
 # or even more powerfull
 # force restart if down
-*/5 * * * * /etc/init.d/remote-storage status || /etc/init.d/remote-storage force-start || /etc/init.d/remote-storage restart || remote-storage force-restart
+*/5 * * * * /etc/init.d/remote-storage status || /etc/init.d/remote-storage force-start || /etc/init.d/remote-storage restart || /etc/init.d/remote-storage force-restart
 ```
 
 ## Sources
