@@ -159,22 +159,16 @@ Useful command for the scripts: find uid/gid of the user sambausername
 cat /etc/passwd | grep sambausername #find uid/gid of the user sambausername
 ```
 
-[Script 1: start shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/start-shared.sh)
+[Script: start/stop/restart shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/remote-script.sh)
 ```bash
 # Mount remote drive and start samba
-root@internal:~$ ./start-shared.sh #will ask you a password
-```
-
-[Script 2: stop shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/stop-shared.sh)
-```bash
+root@internal:~$ ./remote-script.sh start #does not ask you a password, use force-start to force the start when partially started
 # Unmount remote drive and stop samba
-root@internal:~$ ./stop-shared.sh
-```
-
-[Script 3: status shared](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/status-shared.sh)
-```bash
+root@internal:~$ ./remote-script.sh stop #use force-stop to force (force might be dangerous as it force the unmount)
+# Restart the remote drive
+root@internal:~$ ./remote-script.sh restart #call stop followed by start, use force-restart to force
 # Status of the remote storage
-root@internal:~$ ./status-shared.sh
+root@internal:~$ ./remote-script.sh status
 ```
 
 ## Auto-mount at startup
@@ -223,7 +217,7 @@ Add the following query to your crontab (as root): `crontab -e`
 
 # or even more powerfull
 # force restart if down
-*/5 * * * * ret=$(/etc/init.d/remote-storage status) ; rc=$? ; if [ "$rc" -ne 0 ]; then if [ "$rc" -lt 10 ]; then echo "REMOTE DRIVE NOT STARTED"; /etc/init.d/remote-storage restart; else echo "REMOTE DRIVE UNACCESSIBLE"; (/etc/init.d/remote-storage stop && /etc/init.d/remote-storage start) || (fuser -k /boxes/box ; fuser -k /boxes/.box_enc ; /etc/init.d/remote-storage restart); fi; fi
+*/5 * * * * */5 * * * * /etc/init.d/remote-storage status || /etc/init.d/remote-storage restart || /etc/init.d/remote-storage force-restart
 ```
 
 ## Sources
