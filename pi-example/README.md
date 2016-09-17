@@ -264,6 +264,8 @@ root@pi:~$ cd /boxes/box/.backup/
 root@pi:~$ find . -type d -empty -exec rmdir {} \;
 ```
 
+A full script containing both cleaning and copy part is available at: [rsync-phone.sh](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/pi-example/rsync-phone.sh)
+
 - Launch it automatically... to be done...
 
 ## Access from Google Drive and other cloud solutions
