@@ -38,6 +38,8 @@ function run_sync()
    log_rsync=$(echo "${path_src}.rlog" | sed "s/\//./g")
    log_find_out=$(echo "${path_src}.fout" | sed "s/\//./g")
 
+   parent_src=$(echo "${path_src}" | rev | cut -d/ -f2- | rev)
+
    rm -f "${log_rsync}"
    rm -f "${log_find_out}"
    rm -f "${log_rsync}.2"
@@ -53,10 +55,9 @@ function run_sync()
    find "${path_src}/" -type f ! -name ".*" ! -path "*thumbnail*" > "${log_find_out}"
 
    echo_info ":::  Analysing synchronisation status  :::"
-   cat "${log_rsync}" | sed -rn "s/^.*rsync: sender failed to remove (.+): Permission denied \(13\)$/\1/p" | sort > "${log_rsync}.2"
-   cat "${log_find_out}" | cut -c 3- | cut -c "${#path_src}-" | sort > "${log_find_out}.2"
+   cat "${log_rsync}" | sed -rn "s/^.*rsync: sender failed to remove (.+): Permission denied \(13\)$/\1/p" | awk '$0="${parent_src}/"$0' | sort > "${log_rsync}.2"
 
-   diff "${log_rsync}.2" "${log_find_out}.2" > /dev/null 2>&1
+   diff "${log_rsync}.2" "${log_find_out}" > /dev/null 2>&1
    clean_status=$?
 
    if [ $rsync_status -ne 0 ]; then
