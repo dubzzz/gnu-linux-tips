@@ -55,7 +55,7 @@ function run_sync()
    find "${path_src}/" -type f ! -name ".*" ! -path "*thumbnail*" > "${log_find_out}"
 
    echo_info ":::  Analysing synchronisation status  :::"
-   cat "${log_rsync}" | sed -rn "s/^.*rsync: sender failed to remove (.+): Permission denied \(13\)$/\1/p" | awk '$0="${parent_src}/"$0' | sort > "${log_rsync}.2"
+   cat "${log_rsync}" | sed -rn "s/^.*rsync: sender failed to remove (.+): Permission denied \(13\)$/\1/p" | awk '$0="'${parent_src}'/"$0' | sort > "${log_rsync}.2"
 
    diff "${log_rsync}.2" "${log_find_out}" > /dev/null 2>&1
    clean_status=$?
