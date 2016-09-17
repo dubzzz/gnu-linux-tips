@@ -257,7 +257,7 @@ ifconfig | grep tun0 && rsync -e ssh -zz -v -rtgoD --remove-source-files --backu
 ifconfig | grep tun0 && rsync -e ssh -zz -v -rtgoD --remove-source-files --backup-dir="${dest}/sdcard1-${backupdir}" --exclude '.*' --exclude '*thumbnail*' /sdcard1/Pictures sambausername@10.8.0.2:${dest}/sdcard1/
 ```
 
-Please not that if this script is interrupted during its execution (for eg.: network down), it might leave backup directories on the destination. You can clean these empty backupd by running the commands:
+Please note that if this script is interrupted during its execution (for eg.: network down), it might leave backup directories on the destination. You can clean these empty backupd by running the commands:
 
 ```bash
 root@pi:~$ cd /boxes/box/.backup/
