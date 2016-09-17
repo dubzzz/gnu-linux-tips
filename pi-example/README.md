@@ -266,6 +266,8 @@ root@pi:~$ find . -type d -empty -exec rmdir {} \;
 
 A full script containing both cleaning and copy part is available at: [rsync-phone.sh](https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/pi-example/rsync-phone.sh)
 
+Due to new Android policies, note that ```--remove-source-files``` will not work when dealing with sdcards storages. This script makes sure to check that everything has been transfered so that you can remove your files manually.
+
 - Launch it automatically... to be done...
 
 ## Access from Google Drive and other cloud solutions
