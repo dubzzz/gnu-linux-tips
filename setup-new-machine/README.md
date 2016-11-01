@@ -32,7 +32,7 @@ root@server:~$ usermod -a -G sudo <username>
 root@server:~$ # Switch to this user to fullfill its configuration
 root@server:~$ su <username>
 <username>@server:~root$ cd ~<username>
-root@server:~$ # Screen, Git and Bash configurations
+<username>@server:~$ # Screen, Git and Bash configurations
 <username>@server:~$ wget --no-check-certificate https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/misc/.bashrc.colors
 <username>@server:~$ wget --no-check-certificate https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/misc/.screenrc
 <username>@server:~$ wget --no-check-certificate https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
