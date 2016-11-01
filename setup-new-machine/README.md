@@ -65,8 +65,6 @@ fi)'
 if [[ -z $STY ]]
 then
         screen -x main select 1 || screen -R -S main;
-#else
-#       trap 'custom=($BASH_COMMAND); screen -X title $custom' DEBUG;
 fi
 ```
 
