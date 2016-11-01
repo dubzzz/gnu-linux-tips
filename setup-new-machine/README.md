@@ -40,7 +40,7 @@ root@server:~$ # Screen, Git and Bash configurations
 <username>@server:~$ vim .bashrc
 ```
 
-Append those lines to the existing ````.bashrc``` file:
+Append those lines to the existing ```.bashrc``` file:
 
 ```bash
 # Custom PS1 for Git
@@ -72,7 +72,7 @@ fi
 
 ```bash
 <username>@server:~$ # In case screen does not work you can try by running
-<username>@server:~$ script /dev/null #enable screen
+<username>@server:~$ script /dev/null
 ```
 
 ### Grant user SSH access
