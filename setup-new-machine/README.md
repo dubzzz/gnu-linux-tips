@@ -91,3 +91,9 @@ root@server:~$ service sshd reload
 ```
 
 Before killing any running SSH session try to log again using <username>.
+
+## Development tools
+
+```bash
+root@server:~$ apt-get install git g++ clang vim cmake make libgtest-dev
+```
