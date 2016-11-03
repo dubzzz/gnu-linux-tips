@@ -96,4 +96,8 @@ Before killing any running SSH session try to log again using <username>.
 
 ```bash
 root@server:~$ apt-get install git g++ clang vim cmake make libgtest-dev python-dev
+root@server:~$ cd /usr/src/gtest
+root@server:/usr/src/gtest$ cmake .
+root@server:/usr/src/gtest$ make
+root@server:/usr/src/gtest$ mv libgtest* /usr/lib/
 ```
