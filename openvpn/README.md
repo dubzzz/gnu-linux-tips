@@ -68,6 +68,11 @@ root@server:~$ echo "1" > /proc/sys/net/ipv4/ip_forward
 root@server:~$ service openvpn restart
 ```
 
+In order to run it on each reboot of your machine you can create a script under ~root/openvpn-on-reboot.sh with rights 500 (for root) and create a new crontab task (```crontab -e```) having the following code:
+```bash
+@reboot ~/openvpn-on-reboot.sh
+```
+
 NOTE: you can change the password of a certificate by running
 ```bash
 root@server:~/<openvpn>/$ openssl rsa -des3 -in client1.key -out client1.bis.key
