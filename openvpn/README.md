@@ -93,7 +93,7 @@ In /etc/openvpn/server.conf, add the line:
 ```client-config-dir ccd```
 
 Edit /etc/openvpn/ccd/<client-name>
-```ifconfig-push 10.8.0.100 10.8.0.101```
+```ifconfig-push 10.8.0.100 255.255.255.0```
 
 ## Who needs what?
 
