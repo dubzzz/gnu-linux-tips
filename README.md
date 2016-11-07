@@ -14,3 +14,4 @@ Services
 
 Examples:
 - [Raspberry PI & Remote configuration](https://github.com/dubzzz/gnu-linux-tips/blob/master/pi-example/README.md)
+- [Setup a new machine](https://github.com/dubzzz/gnu-linux-tips/blob/master/setup-new-machine/README.md)
