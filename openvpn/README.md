@@ -98,7 +98,7 @@ root@server:~$ vim /etc/openvpn/server.conf
 client-config-dir ccd
 ```
 ```bash
-root@server:~$ vim /etc/openvpn/ccd/<client-name>
+root@server:~$ vim /etc/openvpn/ccd/<client-name> # Assign <client-name> to IP 10.8.0.100
 ```
 ```bash
 ifconfig-push 10.8.0.100 255.255.255.0
