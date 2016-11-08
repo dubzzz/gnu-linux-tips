@@ -84,6 +84,11 @@ root@server:~$ cd /etc/openvpn && openvpn server.conf #server
 root@client:~$ cd /etc/openvpn && openvpn client.conf #client
 ```
 
+NOTE: If debuging of configuration files goes right but normal start fails, try to edit the file /etc/default/openvpn to specify the default configuration file that should be used. You might need to restart the computers to get it work
+```bash
+AUTOSTART="server" #AUTOSTART="client"
+```
+
 NOTE: Assign static ip to user
 ```bash
 root@server:~$ mkdir /etc/openvpn/ccd
