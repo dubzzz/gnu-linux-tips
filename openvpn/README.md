@@ -93,9 +93,15 @@ NOTE: Assign static ip to user <client-name>
 ```bash
 root@server:~$ mkdir /etc/openvpn/ccd
 root@server:~$ vim /etc/openvpn/server.conf
-root@server:~$ #Add the line: client-config-dir ccd
+```
+```bash
+client-config-dir ccd
+```
+```bash
 root@server:~$ vim /etc/openvpn/ccd/<client-name>
-root@server:~$ #File content: ifconfig-push 10.8.0.100 255.255.255.0
+```
+```bash
+ifconfig-push 10.8.0.100 255.255.255.0
 ```
 
 ## Who needs what?
