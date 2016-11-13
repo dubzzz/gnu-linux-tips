@@ -45,6 +45,11 @@ Match User scpuser
     PasswordAuthentication no
 ```
 
+If you are using ```AllowUsers``` tag in ```/etc/ssh/sshd_config``` file make sure to append the user ```scpuser``` to the list as follow:
+```
+AllowUsers user1 user2 scpuser
+```
+
 Creating the user
 ```bash
 root@remote:~$ service ssh restart
