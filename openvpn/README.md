@@ -7,6 +7,7 @@
 - [OpenVPN for Android](#openvpn-for-android)
 - [OpenVPN for GNU/Linux client](#openvpn-for-gnulinux-client)
 - [OpenVPN for Windows](#openvpn-for-windows)
+- [Debug](#debug)
 
 ## OpenVPN server configuration
 
@@ -164,3 +165,11 @@ Note: if you want to use a signed certificate with a password, you can store thi
 # OpenVPN for Windows
 
 [Available on OpenVPN official website](https://openvpn.net/index.php/open-source/downloads.html)
+
+# Debug
+
+In order to debug on server-side you can run the command:
+```bash
+root@client:~$ tcpdump -i eth0 udp port 1194
+root@client:~$ tcpdump -i tun0
+```
