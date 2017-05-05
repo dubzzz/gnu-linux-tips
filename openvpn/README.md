@@ -179,4 +179,5 @@ You can troubleshoot issues on client-side by running the following commands:
 root@client:~$ traceroute 8.8.8.8
 root@client:~$ ip route show
 root@client:~$ ip route list
+root@client:~$ netstat -nr
 ```
