@@ -170,6 +170,13 @@ Note: if you want to use a signed certificate with a password, you can store thi
 
 In order to debug on server-side you can run the command:
 ```bash
-root@client:~$ tcpdump -i eth0 udp port 1194
-root@client:~$ tcpdump -i tun0
+root@server:~$ tcpdump -i eth0 udp port 1194
+root@server:~$ tcpdump -i tun0
+```
+
+You can troubleshoot issues on client-side by running the following commands:
+```bash
+root@client:~$ traceroute 8.8.8.8
+root@client:~$ ip route show
+root@client:~$ ip route list
 ```
