@@ -346,6 +346,7 @@ function runner()
 			;;
 
 		status)
+			readd_missing_routes && \
 			echo_info "Checking status" && \
 				status_enc && \
 				status_clear && \
