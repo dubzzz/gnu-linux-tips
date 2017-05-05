@@ -16,6 +16,11 @@ extpass_script="/path/.extpass_script.sh" # Location of the extpass script (scri
 distant_user="scpuser" # Username to log-on distant server
 distant_host="distant" # Hostname or IP address of distant server (owning encrypted data)
 distant_path="box" # Path of encrypted directory (encfs one) on distant machine (relative or absolute)
+distant_ip="000.000.000.000" # IP of distant server
+
+# Local configuration
+local_gateway_ip="192.168.0.1" # IP address of the local gateway
+local_interface="eth0" # Interface to reach the local network
 
 # SCRIPT WARM-UPS
 
@@ -117,6 +122,18 @@ function start_samba()
 }
 
 # Status helpers
+
+function readd_missing_routes()
+{
+	ret=$(/sbin/ip route show | grep "${distant_ip} via ${local_gateway_ip} dev ${local_interface}" | wc -l)
+	if [ "$ret" -gt 0 ]; then
+		echo_info "Route towards server: OK"
+	else
+		echo_warning "Route towards server: RE-ADDED"
+		ip route add "${distant_ip}" dev "${local_interface}" via "${local_gateway_ip}"
+	fi
+	return 0
+}
 
 function status_enc()
 {
@@ -263,6 +280,7 @@ function runner()
 {
 	case $1 in
 		start)
+			readd_missing_routes && \
 			echo_info "Mounting distant drives" && \
 				create_enc && mount_enc && \
 				create_clear && mount_clear && \
@@ -279,6 +297,7 @@ function runner()
 			;;
 
 		force-start)
+			readd_missing_routes && \
 			echo_info "Mounting distant drives" && \
 				( status_enc || ( create_enc && mount_enc ) ) && \
 				( status_clear || ( create_clear && mount_clear ) ) && \
