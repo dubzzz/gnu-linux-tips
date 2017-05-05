@@ -181,3 +181,37 @@ root@client:~$ ip route show
 root@client:~$ ip route list
 root@client:~$ netstat -nr
 ```
+
+My local network is very unstable making disconnections from internet quite usual. Each time I disconnected from the internet my only way to ping back throughout the VPN was to stop and start again the VPN connection using:
+```bash
+root@client:~$ service openvpn stop
+root@client:~$ service openvpn start
+```
+
+Another way to solve the issue was to re-add the missing route that disappeared during disconnection:
+```bash
+root@client:~$ # ip route add <server ip> dev <local network interface> src <gateway ip in local network>
+root@client:~$ ip route add 37.187.109.86 dev eth0 src 192.168.0.1
+```
+
+Here are the outputs I got when running route commands:
+```bash
+root@client:~$ # When everything is OK
+root@client:~$ ip route show
+
+default via 255.255.255.0 dev tun0
+default via 192.168.0.1 dev eth0  metric 206
+10.8.0.1 via 255.255.255.0 dev tun0
+37.187.109.86 via 192.168.0.1 dev eth0
+192.168.0.0/24 dev eth0  proto kernel  scope link  src 192.168.0.9  metric 206
+255.255.255.0 dev tun0  proto kernel  scope link  src 10.8.0.9
+
+root@client:~$ # Just after a disconnect
+root@client:~$ ip route show
+
+default via 255.255.255.0 dev tun0
+default via 192.168.0.1 dev eth0  metric 206
+10.8.0.1 via 255.255.255.0 dev tun0
+192.168.0.0/24 dev eth0  proto kernel  scope link  src 192.168.0.9  metric 206
+255.255.255.0 dev tun0  proto kernel  scope link  src 10.8.0.9
+```
