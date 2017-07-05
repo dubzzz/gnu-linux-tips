@@ -6,7 +6,7 @@ It supports multiple kind of RAID, ranging from RAID-0 to RAID-6 or more exotic 
 
 ## Configure partitions
 
-Manage partitions. You may want to refer to [MBR](https://github.com/dubzzz/gnu-linux-tips/tree/master/mbr) before applying any changes to partitions.
+Manage partitions. You may want to refer to [MBR](./mbr) before applying any changes to partitions.
 ```bash
 root@server: fdisk -L #list partitions and disks
 root@server: fdisk /dev/sdX #change a partition
