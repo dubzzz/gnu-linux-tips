@@ -202,7 +202,7 @@ And add a line like this one (rsync every 6 hours):
 ## Syncing your phone's data automatically
 
 First of all download the app [Termux](https://play.google.com/store/apps/details?id=com.termux&hl=fr) on your Android mobile phone.
-Then run commands ```àpt-get install rsync``` and ```àpt-get install ssh``` from termux.
+Then run commands ```apt-get install rsync``` and ```apt-get install ssh``` from termux.
 
 The following configuration will make your phone able to sync its data towards the remote storage. It requires that both the phone and the Raspberry PI (or clear directory) connects to the VPN. The PI must provide a ssh access to the phone.
 
@@ -220,6 +220,7 @@ You may want to update /etc/firewall.conf after this change in order to make it 
 - Allow <sambausername> to connect through VPN access
 
 Edit /etc/ssh/sshd_config by modifying or adding:
+
 ```bash
 AllowUsers pi sambausername
 
@@ -233,12 +234,12 @@ And restart ssh service: ```service ssh restart```
 
 - Generate ssh public key on your phone
 
-````bash
+```bash
 termux@phone:~$ ssh-keygen -b 4096 -t rsa
 termux@phone:~$ # Send .ssh/id_rsa.pub to the PI
 ```
 
-````bash
+```bash
 sambausername@pi:~$ cat id_rsa_phone.pub >> ~sambausername/.ssh/authorized_keys
 ```
 
