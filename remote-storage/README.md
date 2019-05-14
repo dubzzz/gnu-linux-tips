@@ -136,6 +136,11 @@ user1@internal:~$ fusermount -u /boxes/.box_enc
 
 ## Example of usage: samba
 
+Required packages
+```bash
+root@internal:~$ apt-get install samba
+```
+
 Add Samba user
 ```bash
 root@internal:~$ adduser --no-create-home --disabled-password --disabled-login sambausername
