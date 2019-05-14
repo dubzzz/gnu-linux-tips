@@ -96,6 +96,7 @@ root@remote:/home/jails$ chmod 666 dev/*
 Generate the public key on the _internal server_ and add it to user scpuser of the _remote server_.
 If you are generating the key for a non-root user, you should configure it with a password for higher safety.
 ```bash
+# user1@internal must be replaced by root@internal when mounting from script (see below)
 user1@internal:~$ ssh-keygen -b 4096 -t rsa
 user1@internal:~$ scp ~/.ssh/id_rsa.pub user1@remote:id_rsa_internal.pub
 ```
@@ -113,7 +114,7 @@ root@internal:~$ mkdir /boxes
 root@internal:~$ chmod 755 /boxes
 root@internal:~$ mkdir /boxes/.box_enc
 root@internal:~$ mkdir /boxes/box
-root@internal:~$ chown user1:user1 /boxes/*
+root@internal:~$ chown user1:user1 /boxes/*  # Not required when mounting from script (see below)
 root@internal:~$ chmod 770 /boxes/*
 ```
 
