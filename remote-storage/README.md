@@ -161,6 +161,11 @@ Useful commands
 root@server:~$ smbpasswd -a toto
 ```
 
+Normally you should be able to login. If it fails you might have a look into samba's logs (increase the level to 4).
+If you see something like `LanMan nor NT password supplied for user`, you might try what suggested in https://superuser.com/questions/1408271/win-10-connecting-to-samba-on-raspbian-gives-wrong-password
+
+The solution is to update the regedit key called LmCompatibilityLevel to 3 (or more) in HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa.
+
 ## Mount the drive by script
 
 Create a public key for root user of internal and send it to remote machine in order to be able to log as scpuser (add it to authorized_keys of scpuser as done above).
