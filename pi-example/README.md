@@ -1,5 +1,10 @@
 # Example of Raspberry PI configuration
 
+## First start with SSH on
+
+By default Raspbian disables SSH.
+In order to have it enabled at the first boot, you just have to add an empty file called `ssh` in `/boot`.
+
 ## Bye-bye to your internet provider DNS
 
 Edit /etc/resolv.conf:
