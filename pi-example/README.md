@@ -3,7 +3,14 @@
 ## First start with SSH on
 
 By default Raspbian disables SSH.
+
+**From Unix**
+
 In order to have it enabled at the first boot, you just have to add an empty file called `ssh` in `/boot`.
+
+**From Windows**
+
+Create an empty file called `ssh` at the root of the mounted drive (drive might already contains the following: `overlays` or `kernel.img`).
 
 ## Bye-bye to your internet provider DNS
 
