@@ -150,6 +150,7 @@ The configuration file `/etc/openvpn/client.conf` have to be updated to be able 
 - Make sure whether or not you are relying on `udp` (default) or `tcp`
 - Make sure you need `tls-auth` (use `;` if not configured server-side)
 - Make sure you need `comp-lzo` (use `;` if not configured server-side)
+- Make sure you use the right `cipher`
 
 Edit the file `/etc/default/openvpn` to specify the default configuration file that should be used.
 
@@ -229,3 +230,8 @@ default via 192.168.0.1 dev eth0  metric 206
 192.168.0.0/24 dev eth0  proto kernel  scope link  src 192.168.0.9  metric 206
 255.255.255.0 dev tun0  proto kernel  scope link  src 10.8.0.9
 ```
+
+Here are some error logs you might find in `/var/log/syslog` if OpenVPN fails to start correctly:
+
+- `Authenticate/Decrypt packet error: cipher final failed` -> check the `cipher` option
+- `Options error: --tls-auth fails with 'ta.key': No such file or directory` -> check the `tls-auth` option
