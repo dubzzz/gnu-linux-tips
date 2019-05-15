@@ -109,6 +109,8 @@ root@pi:~$ # Flush input rules, apply drop policy on inputs, do not kill exitsin
 root@pi:~$ iptables -F INPUT ; iptables -P INPUT DROP ; iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT ; iptables -I INPUT -i lo -j ACCEPT
 root@pi:~$ # Apply accept policy on outputs and forward
 root@pi:~$ iptables -P OUTPUT DROP ; iptables -P FORWARD DROP
+root@pi:~$ # Allow server to create new connexions
+root@pi:~$ iptables -A OUTPUT -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 root@pi:~$ # Allow ping from all interfaces (eth0, tun0...)
 root@pi:~$ iptables -A INPUT -p icmp -j ACCEPT
 root@pi:~$ # Limit SSH access to local network (on eth0 only) and VPN root server
