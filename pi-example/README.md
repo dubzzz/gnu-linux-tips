@@ -107,10 +107,6 @@ Please run these commands carefully as they may block access to some of the runn
 ```bash
 root@pi:~$ # Flush input rules, apply drop policy on inputs, do not kill exitsing connections and allow internal loop
 root@pi:~$ iptables -F INPUT ; iptables -P INPUT DROP ; iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT ; iptables -I INPUT -i lo -j ACCEPT
-root@pi:~$ # Apply accept policy on outputs and forward
-root@pi:~$ iptables -P OUTPUT DROP ; iptables -P FORWARD DROP
-root@pi:~$ # Allow server to create new connexions
-root@pi:~$ iptables -A OUTPUT -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 root@pi:~$ # Allow ping from all interfaces (eth0, tun0...)
 root@pi:~$ iptables -A INPUT -p icmp -j ACCEPT
 root@pi:~$ # Limit SSH access to local network (on eth0 only) and VPN root server
@@ -124,6 +120,8 @@ root@pi:~$ iptables -A INPUT -p tcp -i eth0 --dport 137 -j ACCEPT
 root@pi:~$ iptables -A INPUT -p udp -i eth0 --dport 138 -j ACCEPT
 root@pi:~$ iptables -A INPUT -p udp -i eth0 --dport 139 -j ACCEPT
 root@pi:~$ iptables -A INPUT -p tcp -i eth0 --dport 445 -j ACCEPT
+root@pi:~$ # OPT: Apply accept policy on outputs and forward, allow server to create new connexions
+root@pi:~$ iptables -P OUTPUT DROP ; iptables -P FORWARD DROP ; iptables -A OUTPUT -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 ```
 
 Test the whole configuration. Once perfectly tested you can save this configuration in order to use it at each reboot. More details at https://debian-administration.org/article/445/Getting_IPTables_to_survive_a_reboot.
