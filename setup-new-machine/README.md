@@ -154,6 +154,35 @@ nft add rule inet my_table my_tcp_chain tcp dport 22 accept
 
 Add execution right to it and execute it as root. Try to ping the machine, try to connect to it via ssh. If everything works fine, you are ready to save this configuration in order to apply it at next boot.
 
+Remove `firewall.sh`. Save the configuration into `/etc/nftables/main.conf`:
+
+```bash
+mkdir /etc/nftables
+cd /etc/nftables
+nft list ruleset > main.conf
+# everything that is ousite of my_table
+```
+
+Edit `/etc/nftables.conf` to use this configuration on next boot:
+
+```txt
+#!/usr/sbin/nft -f
+
+flush ruleset
+include "/etc/nftables/main.conf"
+```
+
+Create or edit `/etc/nftables/reload_main.conf` - _used to reload only the main table without the others like fail2ban_:
+
+```txt
+#!/usr/sbin/nft -f
+
+delete table inet main
+include "/etc/nftables/main.conf"
+```
+
+Make it executable using: `chmod +x /etc/nftables/reload_main.conf`.
+
 **Note:**
 - `iptables-translate` may help you to transalte existing rules from `iptables` to `nft` command lines
 - `inet` can be used to create rules for both `ip` and `ip6`
