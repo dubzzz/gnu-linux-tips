@@ -92,6 +92,40 @@ root@server:~$ service sshd reload
 
 Before killing any running SSH session try to log again using <username>.
 
+## Nothing in, nothing out by default
+
+Let's adopt a pretty defensive `iptables` policy:
+
+> Except explicitely opened, a port will be closed for in and out traffic.
+
+Here are some commands that might be useful when investigating network related problems:
+
+```bash
+root@server:~$ # List network interfaces (equivalent commands)
+root@server:~$ ip link show
+root@server:~$ netstat -i
+root@server:~$ ifconfig -a
+root@server:~$ # See routing tables
+root@server:~$ ip r
+root@server:~$ # See ARP cache
+root@server:~$ arp
+```
+
+Now we can list our available network interfaces let's change the rules of `iptables`. Note: you must replace references to `eno0` by your network interface.
+
+```bash
+root@server:~$ # Flush input rules, apply drop policy on inputs, do not kill exitsing connections and allow internal loop
+root@server:~$ iptables -F INPUT ; iptables -P INPUT DROP ; iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT ; iptables -I INPUT -i lo -j ACCEPT
+root@server:~$ # Allow ping from all interfaces (eno0, tun0...)
+root@server:~$ iptables -A INPUT -p icmp -j ACCEPT
+root@server:~$ # Limit SSH access to eno0
+root@server:~$ iptables -A INPUT -p tcp -i eno0 --dport ssh -j ACCEPT
+root@server:~$ # OPT: Apply accept policy on outputs and forward, allow server to create new connexions
+root@server:~$ iptables -P OUTPUT DROP ; iptables -P FORWARD DROP ; iptables -A OUTPUT -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+```
+
+Refer to [Firewall Configuration](https://github.com/dubzzz/gnu-linux-tips/blob/448da7d57ccc4c3d077655d9afdff77389439a44/pi-example/README.md#firewall-configuration) to see what should be done next.
+
 ## Development tools
 
 ```bash
