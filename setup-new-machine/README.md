@@ -19,7 +19,7 @@ root@server:~$ apt-get update && apt-get upgrade
 ### Install minimum required packages
 
 ```bash
-root@server:~$ apt-get install screen vim fail2ban git sudo htop
+root@server:~$ apt-get install screen vim fail2ban git sudo htop iftop
 ```
 
 ### Add an user and configure its space
