@@ -126,6 +126,14 @@ root@server:~$ iptables -P OUTPUT DROP ; iptables -P FORWARD DROP ; iptables -A 
 
 Refer to [Firewall Configuration](https://github.com/dubzzz/gnu-linux-tips/blob/448da7d57ccc4c3d077655d9afdff77389439a44/pi-example/README.md#firewall-configuration) to see what should be done next.
 
+Then you may want to double-check that only required ports are kept opened by using:
+```bash
+root@server:~$ # Show the port and listening socket associated with the service and lists both UDP and TCP protocols
+root@server:~$ netstat -plunt
+root@server:~$ # Scan for every TCP and UDP open port (from another server)
+root@server:~$ nmap -n -PN -sT -sU -p- <remote_host>
+```
+
 ## Development tools
 
 ```bash
