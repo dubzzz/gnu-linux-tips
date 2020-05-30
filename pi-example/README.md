@@ -137,6 +137,7 @@ Following lines might be removed from the configuration file firewall.conf:
 :fail2ban-ssh - [0:0]
 -A fail2ban-ssh -j RETURN
 ```
+More generally anything that refers to `fail2ban-ssh` or `f2b-sshd`.
 
 Create and edit the file /etc/network/if-up.d/iptables
 ```bash
@@ -144,9 +145,9 @@ Create and edit the file /etc/network/if-up.d/iptables
 iptables-restore < /etc/firewall.conf
 ```
 
-Make it executable:
+Make it executable and not readable by others:
 ```bash
-root@pi:~$ chmod +x /etc/network/if-up.d/iptables
+root@pi:~$ chmod 500 /etc/network/if-up.d/iptables
 ```
 
 Reboot and the that the rules are still here by running:
