@@ -94,11 +94,71 @@ Before killing any running SSH session try to log again using <username>.
 
 ## Nothing in, nothing out by default
 
-Let's adopt a pretty defensive `iptables` policy:
+> `iptables` is being replaced by `nftables` starting with Debian Buster
+
+Official guide for nftables in Debian is available at https://wiki.debian.org/nftables and a migration guide at https://wiki.nftables.org/wiki-nftables/index.php/Moving_from_iptables_to_nftables.
+
+Let's adopt a pretty defensive `nftables` policy:
 
 > Except explicitely opened, a port will be closed for in and out traffic.
 
-Here are some commands that might be useful when investigating network related problems:
+### Configuration
+
+ArchWiki comes with a pretty great documentation on how nftables should be configured: https://wiki.archlinux.org/index.php/Nftables.
+
+```bash
+# Enable a basic firewall
+aptitude install nftables
+systemctl enable nftables.service
+# List existing rules
+nft list ruleset
+```
+
+Then create a `firewall.sh` script containing:
+```bash
+# Adapted from https://wiki.archlinux.org/index.php/Nftables
+# Flush the current ruleset
+nft flush ruleset
+# Add a table
+nft add table inet my_table
+# Add the input, forward, and output base chains. The policy for input and forward will be to drop. The policy for output will be to accept.
+nft add chain inet my_table my_input '{ type filter hook input priority 0 ; policy drop ; }'
+nft add chain inet my_table my_forward '{ type filter hook forward priority 0 ; policy drop ; }'
+nft add chain inet my_table my_output '{ type filter hook output priority 0 ; policy accept ; }'
+# Add two regular chains that will be associated with tcp and udp
+nft add chain inet my_table my_tcp_chain
+nft add chain inet my_table my_udp_chain
+# Related and established traffic will be accepted
+nft add rule inet my_table my_input ct state related,established accept
+# All loopback interface traffic will be accepted
+nft add rule inet my_table my_input iif lo accept
+# Drop any invalid traffic
+nft add rule inet my_table my_input ct state invalid drop
+# Accept ICMP and IGMP
+nft add rule inet my_table my_input meta l4proto ipv6-icmp icmpv6 type '{ destination-unreachable, packet-too-big, time-exceeded, parameter-problem, mld-listener-query, mld-listener-report, mld-listener-reduction, nd-router-solicit, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert, ind-neighbor-solicit, ind-neighbor-advert, mld2-listener-report }' accept
+nft add rule inet my_table my_input meta l4proto icmp icmp type '{ destination-unreachable, router-solicitation, router-advertisement, time-exceeded, parameter-problem }' accept
+nft add rule inet my_table my_input ip protocol igmp accept
+# Rate limit on ping (without those rules, ping will be rejected)
+nft add rule inet my_table my_input meta l4proto ipv6-icmp icmpv6 type echo-request limit rate 10/second accept
+nft add rule inet my_table my_input meta l4proto icmp icmp type echo-request limit rate 10/second accept
+# New udp (resp. tcp) traffic will jump to the UDP chain (resp. TCP chain)
+nft add rule inet my_table my_input meta l4proto udp ct state new jump my_udp_chain
+nft add rule inet my_table my_input 'meta l4proto tcp tcp flags & (fin|syn|rst|ack) == syn ct state new jump my_tcp_chain'
+# Reject all traffic that was not processed by other rules
+nft add rule inet my_table my_input meta l4proto udp reject
+nft add rule inet my_table my_input meta l4proto tcp reject with tcp reset
+nft add rule inet my_table my_input counter reject with icmpx type port-unreachable
+# To accept SSH traffic on port 22 for interface called
+nft add rule inet my_table my_tcp_chain tcp dport 22 accept
+```
+
+Add execution right to it and execute it as root. Try to ping the machine, try to connect to it via ssh. If everything works fine, you are ready to save this configuration in order to apply it at next boot.
+
+**Note:**
+- `iptables-translate` may help you to transalte existing rules from `iptables` to `nft` command lines
+- `inet` can be used to create rules for both `ip` and `ip6`
+
+### Investigate network issues
 
 ```bash
 root@server:~$ # List network interfaces (equivalent commands)
@@ -111,22 +171,8 @@ root@server:~$ # See ARP cache
 root@server:~$ arp
 ```
 
-Now we can list our available network interfaces let's change the rules of `iptables`. Note: you must replace references to `eno0` by your network interface.
+### Check ports
 
-```bash
-root@server:~$ # Flush input rules, apply drop policy on inputs, do not kill exitsing connections and allow internal loop
-root@server:~$ iptables -F INPUT ; iptables -P INPUT DROP ; iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT ; iptables -I INPUT -i lo -j ACCEPT
-root@server:~$ # Allow ping from all interfaces (eno0, tun0...)
-root@server:~$ iptables -A INPUT -p icmp -j ACCEPT
-root@server:~$ # Limit SSH access to eno0
-root@server:~$ iptables -A INPUT -p tcp -i eno0 --dport ssh -j ACCEPT
-root@server:~$ # OPT: Apply accept policy on outputs and forward, allow server to create new connexions
-root@server:~$ iptables -P OUTPUT DROP ; iptables -P FORWARD DROP ; iptables -A OUTPUT -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
-```
-
-Refer to [Firewall Configuration](https://github.com/dubzzz/gnu-linux-tips/blob/448da7d57ccc4c3d077655d9afdff77389439a44/pi-example/README.md#firewall-configuration) to see what should be done next.
-
-Then you may want to double-check that only required ports are kept opened by using:
 ```bash
 root@server:~$ # Show the port and listening socket associated with the service and lists both UDP and TCP protocols
 root@server:~$ netstat -plunt
