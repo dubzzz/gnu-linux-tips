@@ -181,7 +181,7 @@ delete table inet main
 include "/etc/nftables/main.conf"
 ```
 
-Make it executable using: `chmod +x /etc/nftables/reload_main.conf`.
+Make it executable using: `chmod 744 /etc/nftables/reload_main.conf`.
 
 **Note:**
 - `iptables-translate` may help you to transalte existing rules from `iptables` to `nft` command lines
