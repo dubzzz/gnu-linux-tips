@@ -139,8 +139,8 @@ nft add rule inet my_table my_input meta l4proto ipv6-icmp icmpv6 type '{ destin
 nft add rule inet my_table my_input meta l4proto icmp icmp type '{ destination-unreachable, router-solicitation, router-advertisement, time-exceeded, parameter-problem }' accept
 nft add rule inet my_table my_input ip protocol igmp accept
 # Rate limit on ping (without those rules, ping will be rejected)
-nft add rule inet my_table my_input meta l4proto ipv6-icmp icmpv6 type echo-request limit rate 10/second accept
-nft add rule inet my_table my_input meta l4proto icmp icmp type echo-request limit rate 10/second accept
+nft add rule inet my_table my_input meta l4proto ipv6-icmp icmpv6 type echo-request counter limit rate 10/second accept
+nft add rule inet my_table my_input meta l4proto icmp icmp type echo-request counter limit rate 10/second accept
 # New udp (resp. tcp) traffic will jump to the UDP chain (resp. TCP chain)
 nft add rule inet my_table my_input meta l4proto udp ct state new jump my_udp_chain
 nft add rule inet my_table my_input 'meta l4proto tcp tcp flags & (fin|syn|rst|ack) == syn ct state new jump my_tcp_chain'
