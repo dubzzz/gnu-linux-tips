@@ -23,6 +23,7 @@ Edit /etc/ssh/sshd_config
 ## /etc/ssh/sshd_config
 Match User scpuser
     ChrootDirectory /home/jails
+    ForceCommand internal-sftp
     AllowTCPForwarding no
     X11Forwarding no
     PasswordAuthentication no
@@ -38,42 +39,6 @@ Creating the user
 root@remote:~$ service ssh restart
 root@remote:~$ mkdir -p /home/jails/home
 root@remote:~$ adduser --disabled-password --home /home/jails/home/scpuser --shell /bin/false scpuser
-```
-
-## No root access on remote machine
-
-__This part is out-of-date__
-
-__The following configuration does not work yet but can be the base of a working one.__
-
-Uncomment chroot options
-```bash
-root@remote:~$ vim /etc/rssh.conf
-root@remote:~$ vim /etc/ssh/sshd_config
-root@remote:~$ service ssh restart
-```
-
-Create jails (a kind of second root)
-```bash
-root@remote:~$ cd /home/jails
-root@remote:/home/jails$ wget https://raw.githubusercontent.com/dubzzz/gnu-linux-tips/master/remote-storage/mkdep #http://jeannedarc001.free.fr/mkdep
-root@remote:/home/jails$ chmod +x mkdep
-root@remote:/home/jails$ # Binaries and libs
-root@remote:/home/jails$ ./mkdep /usr/bin/rssh .
-root@remote:/home/jails$ ./mkdep /usr/bin/sftp .
-root@remote:/home/jails$ ./mkdep /usr/lib/rssh/rssh_chroot_helper .
-root@remote:/home/jails$ ./mkdep /usr/lib/sftp-server .
-root@remote:/home/jails$ ./mkdep /usr/bin/scp .
-root@remote:/home/jails$ # Config files
-root@remote:/home/jails$ mkdir etc
-root@remote:/home/jails$ cp /etc/rssh.conf etc/
-root@remote:/home/jails$ grep '^scpuser:' /home/jails/etc/passwd || grep '^scpuser:' /etc/passwd >> /home/jails/etc/passwd
-root@remote:/home/jails$ cp -p /etc/group /home/jails/etc/group
-root@remote:/home/jails$ # Device files
-root@remote:/home/jails$ mkdir dev
-root@remote:/home/jails$ mknod dev/zero c 1 5
-root@remote:/home/jails$ mknod dev/null c 1 3
-root@remote:/home/jails$ chmod 666 dev/*
 ```
 
 ## Mount the drive manually
