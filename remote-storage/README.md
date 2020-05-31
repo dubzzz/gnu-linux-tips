@@ -239,3 +239,7 @@ Add the following query to your crontab (as root): `crontab -e`
 - http://www.herethere.net/~samson/rssh_chroot.html
 - https://doc.ubuntu-fr.org/sshfs [with fstab no encfs]
 - http://www.jinnko.org/2010/11/using-autofs-to-mount-encfs-over-cifs.html [with fstab]
+- https://askubuntu.com/questions/134425/how-can-i-chroot-sftp-only-ssh-users-into-their-homes
+- https://wiki.archlinux.org/index.php/SFTP_chroot#Scponly
+- https://unix.stackexchange.com/questions/9853/restricting-an-ssh-scp-sftp-user-to-a-directory
+- https://github.com/scponly/scponly/wiki/Install
