@@ -18,28 +18,11 @@ The aim of this section is to describe a way to deploy an encrypted remote stora
 
 ## Only scp and sftp on remote machine
 
-Install rssh
-```bash
-root@remote:~$ apt-get install rssh
-root@remote:~$ grep "$(which rssh)" /etc/shells || which rssh >> /etc/shells
-root@remote:~$ mv /etc/rssh.conf /etc/rssh.conf.old
-```
-
-Edit /etc/rssh.conf
-```bash
-## /etc/rssh.conf
-logfacility = LOG_USER
-allowscp
-allowsftp
-umask = 022
-#chrootpath = "/home/jails"
-```
-
 Edit /etc/ssh/sshd_config
 ```bash
 ## /etc/ssh/sshd_config
 Match User scpuser
-    #ChrootDirectory /home/jails
+    ChrootDirectory /home/jails
     AllowTCPForwarding no
     X11Forwarding no
     PasswordAuthentication no
@@ -54,10 +37,12 @@ Creating the user
 ```bash
 root@remote:~$ service ssh restart
 root@remote:~$ mkdir -p /home/jails/home
-root@remote:~$ adduser --disabled-password --home /home/jails/home/scpuser --shell "$(which rssh)" scpuser
+root@remote:~$ adduser --disabled-password --home /home/jails/home/scpuser --shell /bin/false scpuser
 ```
 
 ## No root access on remote machine
+
+__This part is out-of-date__
 
 __The following configuration does not work yet but can be the base of a working one.__
 
