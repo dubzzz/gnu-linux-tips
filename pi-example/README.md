@@ -104,6 +104,8 @@ Moreover, FTP is too usesafe to be exposed to external clients.
 For higher security in both local and vpn networks I suggest to increase firewall protection on the PI itself.
 Please run these commands carefully as they may block access to some of the running services.
 
+_Remark: You may want to authorize more than just `eth0`._
+
 ```bash
 root@pi:~$ # Flush input rules, apply drop policy on inputs, do not kill exitsing connections and allow internal loop
 root@pi:~$ iptables -F INPUT ; iptables -P INPUT DROP ; iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT ; iptables -I INPUT -i lo -j ACCEPT
