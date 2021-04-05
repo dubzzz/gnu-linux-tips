@@ -79,6 +79,9 @@ root@server:~/<openvpn>/$ cp keys/dh*.pem keys/ca.crt keys/server.crt keys/serve
 root@server:~/<openvpn>/$ cd /usr/share/doc/openvpn/examples/sample-config-files
 root@server:/usr/share/doc/openvpn/examples/sample-config-files$ gunzip server.conf.gz
 root@server:/usr/share/doc/openvpn/examples/sample-config-files$ cp /usr/share/doc/openvpn/examples/sample-config-files/server.conf /etc/openvpn/
+
+# For Debian 10.x
+root@server:/etc/openvpn/$ openvpn --genkey --secret /etc/openvpn/server/ta.key
 ```
 
 Edit /etc/openvpn/server.conf, you can give it following settings for instance:
