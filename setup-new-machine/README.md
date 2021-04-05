@@ -151,7 +151,7 @@ nft add rule inet my_table my_input counter reject with icmpx type port-unreacha
 # To accept SSH traffic on port 22 for interface called
 nft add rule inet my_table my_tcp_chain tcp dport 22 accept
  # To accept VPN traffic
-nft add rule inet my_table my_tcp_chain udp dport 1194 accept
+nft add rule inet my_table my_udp_chain udp dport 1194 accept
 nft add rule ip nat POSTROUTING oifname "eno0" ip saddr 10.8.0.0/24 counter masquerade
 ```
 
