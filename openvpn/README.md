@@ -11,6 +11,25 @@
 
 ## OpenVPN server configuration
 
+### Create certificates
+
+#### Debian (10.x)
+
+```bash
+## Debian (version 10.x)
+root@server:~$ apt-get install openvpn easy-rsa
+root@server:~$ make-cadir openvpn
+root@server:~$ cd ~/openvpn/
+root@server:~$ ./easyrsa init-pki
+root@server:~$ ./easy-rsa build-ca
+root@server:~$ ./easyrsa build-server-full server
+root@server:~$ ./easyrsa build-client-full client-a
+root@server:~$ ./easyrsa build-client-full client-b
+root@server:~$ ./easyrsa gen-dh
+```
+
+#### Debian (7-8.x)
+
 Root certificate
 ```bash
 ## Debian Wheezy (version 7.x)
@@ -46,6 +65,8 @@ Diffie-Hellman
 ```bash
 root@server:~/<openvpn>/$ ./build-dh
 ```
+
+### Use certificates
 
 Server configuration
 ```bash
