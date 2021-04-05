@@ -152,9 +152,11 @@ nft add rule inet my_table my_input counter reject with icmpx type port-unreacha
 nft add rule inet my_table my_tcp_chain tcp dport 22 accept
  # To accept VPN traffic
 nft add rule inet my_table my_udp_chain udp dport 1194 accept
-nft add table my_nat
-nft add chain my_nat my_postrouting '{ type nat hook postrouting priority 0; }'
-nft add rule ip my_nat my_postrouting oifname "eno0" ip saddr 10.8.0.0/24 counter masquerade
+nft add rule inet my_table my_forward iifname tun0 oifname eno0 accept
+nft add table ip nat
+nft add chain ip nat prerouting '{ type nat hook prerouting priority 0; }'
+nft add chain ip nat postrouting '{ type nat hook postrouting priority 100; }'
+nft add rule nat postrouting iifname tun0 oifname eno0 ip saddr 10.8.0.0/24 masquerade
 ```
 
 Add execution right to it and execute it as root. Try to ping the machine, try to connect to it via ssh. If everything works fine, you are ready to save this configuration in order to apply it at next boot.
