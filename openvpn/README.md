@@ -70,6 +70,8 @@ root@server:~/<openvpn>/$ ./build-dh
 
 Server configuration
 ```bash
+# ~/<openvpn> = ~/openvpn/pki for Debian 10.x
+# ~/<openvpn> = ~/openvpn     before
 root@server:~/<openvpn>/$ cp keys/dh*.pem keys/ca.crt keys/server.crt keys/server.key /etc/openvpn/
 root@server:~/<openvpn>/$ cd /usr/share/doc/openvpn/examples/sample-config-files
 root@server:/usr/share/doc/openvpn/examples/sample-config-files$ gunzip server.conf.gz
