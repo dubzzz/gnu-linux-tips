@@ -164,6 +164,43 @@ Client only:
 
 [Available on Play Store](https://play.google.com/store/apps/details?id=net.openvpn.openvpn)
 
+Android version accepts `*.ovpn` file, they are structured as follow:
+```txt
+client
+proto udp
+remote new.dubien.me
+port 1194
+dev tun
+nobind
+cipher AES-256-CBC
+comp-lzo yes
+key-direction 1
+
+<ca>
+-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----
+</ca>
+
+<cert>
+-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----
+</cert>
+
+<key>
+-----BEGIN RSA PRIVATE KEY-----
+...
+-----END RSA PRIVATE KEY-----
+</key>
+
+<tls-auth>
+-----BEGIN OpenVPN Static key V1-----
+...
+-----END OpenVPN Static key V1-----
+</tls-auth>
+```
+
 Android version requires a specific key that can be generated using:
 ```bash
 root@server:~$ openssl pkcs12 -export -in client1.crt -inkey client1.key -certfile ca.crt -name client1 -out client1.p12
