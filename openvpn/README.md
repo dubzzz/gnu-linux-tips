@@ -66,6 +66,11 @@ Diffie-Hellman
 root@server:~/<openvpn>/$ ./build-dh
 ```
 
+TLS
+```bash
+root@server:~/<openvpn>/$ openvpn --genkey --secret ta.key
+```
+
 ### Use certificates
 
 Server configuration
@@ -93,6 +98,13 @@ push "dhcp-option DNS 208.67.220.220"
 
 Enable ip forward: these commands have to be run at each restart
 ```bash
+# Debian 10.x
+root@server:~$ vim /etc/sysctl.conf # Uncomment net.ipv4.ip_forward=1
+root@server:~$ sysctl -p
+# See https://palitechsociety.blogspot.com/2019/07/openvpn-server-on-debian-10.html
+
+# uncomment 
+# Debian <10.x
 root@server:~$ /sbin/iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
 root@server:~$ echo "1" > /proc/sys/net/ipv4/ip_forward
 root@server:~$ service openvpn restart
