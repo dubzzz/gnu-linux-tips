@@ -123,7 +123,8 @@ nft flush ruleset
 nft add table inet my_table
 # Add the input, forward, and output base chains. The policy for input and forward will be to drop. The policy for output will be to accept.
 nft add chain inet my_table my_input '{ type filter hook input priority 0 ; policy drop ; }'
-nft add chain inet my_table my_forward '{ type filter hook forward priority 0 ; policy drop ; }'
+#nft add chain inet my_table my_forward '{ type filter hook forward priority 0 ; policy drop ; }'
+nft add chain inet my_table my_forward '{ type filter hook forward priority 0 ; policy accept ; }'
 nft add chain inet my_table my_output '{ type filter hook output priority 0 ; policy accept ; }'
 # Add two regular chains that will be associated with tcp and udp
 nft add chain inet my_table my_tcp_chain
@@ -135,10 +136,10 @@ nft add rule inet my_table my_input iif lo accept
 # Drop any invalid traffic
 nft add rule inet my_table my_input ct state invalid drop
 # Accept ICMP and IGMP
-nft add rule inet my_table my_input meta l4proto ipv6-icmp icmpv6 type '{ destination-unreachable, packet-too-big, time-exceeded, parameter-problem, mld-listener-query, mld-listener-report, mld-listener-reduction, nd-router-solicit, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert, ind-neighbor-solicit, ind-neighbor-advert, mld2-listener-report }' accept
+nft add rule inet my_table my_input meta l4proto ipv6-icmp icmpv6 type '{ destination-unreachable, packet-too-big, time-exceeded, parameter-problem, mld-listener-query, mld-listener-report, mld-listener-reduction, nd-router-solicit, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert, ind-neighbor-solicit, ind-neighbor-advert, mld2-listener-report }' acc$
 nft add rule inet my_table my_input meta l4proto icmp icmp type '{ destination-unreachable, router-solicitation, router-advertisement, time-exceeded, parameter-problem }' accept
 nft add rule inet my_table my_input ip protocol igmp accept
-# Rate limit on ping (without those rules, ping will be rejected)
+# Rate limit on ping
 nft add rule inet my_table my_input meta l4proto ipv6-icmp icmpv6 type echo-request counter limit rate 10/second accept
 nft add rule inet my_table my_input meta l4proto icmp icmp type echo-request counter limit rate 10/second accept
 # New udp (resp. tcp) traffic will jump to the UDP chain (resp. TCP chain)
@@ -150,13 +151,17 @@ nft add rule inet my_table my_input meta l4proto tcp reject with tcp reset
 nft add rule inet my_table my_input counter reject with icmpx type port-unreachable
 # To accept SSH traffic on port 22 for interface called
 nft add rule inet my_table my_tcp_chain tcp dport 22 accept
- # To accept VPN traffic
+# To accept VPN traffic
 nft add rule inet my_table my_udp_chain udp dport 1194 accept
-nft add rule inet my_table my_forward iifname tun0 oifname eno0 accept
+#nft add rule inet my_table my_forward iifname tun0 oifname eno0 accept
+#nft add rule inet my_table my_forward oifname eno0 accept
+#nft add rule inet my_table my_forward oifname eno0 ct state related,established accept
+#nft add rule inet my_table my_forward iifname tun0 oifname eno0 ct state related,established accept
 nft add table ip nat
 nft add chain ip nat prerouting '{ type nat hook prerouting priority 0; }'
 nft add chain ip nat postrouting '{ type nat hook postrouting priority 100; }'
-nft add rule nat postrouting iifname tun0 oifname eno0 ip saddr 10.8.0.0/24 masquerade
+nft add rule nat postrouting oifname eno0 ip saddr 10.8.0.0/24 masquerade
+#nft add rule nat postrouting iifname tun0 oifname eno0 ip saddr 10.8.0.0/24 masquerade
 ```
 
 Add execution right to it and execute it as root. Try to ping the machine, try to connect to it via ssh. If everything works fine, you are ready to save this configuration in order to apply it at next boot.
